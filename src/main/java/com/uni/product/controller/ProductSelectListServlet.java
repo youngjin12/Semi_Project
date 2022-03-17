@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.uni.product.model.service.ProductService;
 import com.uni.product.model.vo.Product;
 
@@ -33,13 +34,29 @@ public class ProductSelectListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int category = Integer.parseInt(request.getParameter("category"));
+		int category = Integer.parseInt(request.getParameter("no"));
 		
 		ArrayList<Product> list = new ProductService().selectListProduct(category);
 		
-		request.setAttribute("list", list);
-		RequestDispatcher rd = request.getRequestDispatcher("views/product/selectProductList.jsp");
-		rd.forward(request, response);
+		ArrayList<Product> changelist = new ArrayList<Product>();
+		if(category == 2) {
+			for(Product p : list) {
+				if(p.getpQuantity() == 500) {
+					changelist.add(p);
+					
+				}
+			}
+			request.setAttribute("list", changelist);
+			response.setContentType("application/json; charset=utf-8"); 
+			new Gson().toJson(list, response.getWriter());
+		} else {
+			request.setAttribute("list", list);
+			response.setContentType("application/json; charset=utf-8"); 
+			new Gson().toJson(list, response.getWriter());
+		}
+	
+		
+		
 		
 	}
 
