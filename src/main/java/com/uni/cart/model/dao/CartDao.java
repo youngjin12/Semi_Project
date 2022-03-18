@@ -32,7 +32,7 @@ private Properties prop = new Properties();
 			e.printStackTrace();
 		} 
 	}
-
+/*
 	public ArrayList<Cart> CartList(Connection conn, String writer) {
 		ArrayList<Cart> list = new ArrayList<>();
 		
@@ -49,12 +49,16 @@ private Properties prop = new Properties();
 			
 			while(rset.next()) {
 				
-				Cart c = new Cart(rset.getInt("PRODUCT_PRICE"),
+				Cart c = new Cart(rset.getInt("CART_NO"),
+								  rset.getInt("P_ID"),
+								  rset.getString("PI_NAME"),
+								  rset.getInt("PRODUCT_PRICE"),
 								  rset.getInt("PRODUCT_AMOUNT"),
 								  rset.getString("P_NAME"),
 							  	  rset.getDate("D_DATE"));
 				
 				list.add(c);
+				System.out.println("Dao list =====" + list);
 			}
 			
 		} catch (SQLException e) {
@@ -68,5 +72,45 @@ private Properties prop = new Properties();
 		//System.out.println("Dao list : " + list);
 		return list;
 	}
+	*/
+	public Cart CartList(Connection conn, String writer) {
+		Cart c = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectCartList");
+		//System.out.println("DAO sql : " + sql);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(writer));
+			//System.out.println("Dao writer : " + writer);
+			rset = pstmt.executeQuery();
+			
+				
+				 c = new Cart(rset.getInt("CART_NO"),
+								  rset.getInt("P_ID"),
+								  rset.getString("PI_NAME"),
+								  rset.getInt("PRODUCT_PRICE"),
+								  rset.getInt("PRODUCT_AMOUNT"),
+								  rset.getString("P_NAME"),
+							  	  rset.getDate("D_DATE"));
+				
+
+				System.out.println("Dao list =====" + c);
+				System.out.println("Dao c : " + c);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		//System.out.println("Dao list : " + list);
+		return c;
+	}
+
 
 }

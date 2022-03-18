@@ -20,7 +20,7 @@ import com.uni.product.model.vo.Product;
 /**
  * Servlet implementation class CartListServlet
  */
-@WebServlet("/CartList.do")
+@WebServlet("/cartList.do")
 public class CartListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,24 +35,40 @@ public class CartListServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+    /*
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String writer = String.valueOf(((Member)request.getSession().getAttribute("loginUser")).getUserNo());
 		//System.out.println("Servlet writer : " + writer);
 		ArrayList<Cart> list = new CartService().CartList(writer);
-		System.out.println(list);
 		
 		request.setAttribute("list", list);
 
+		
 		response.setContentType("application/json; charset=utf-8"); 
 		
 		new Gson().toJson(list, response.getWriter());
-		
 
+		for(int i = 0; i < list.size(); i++) {
+			System.out.println("Servlet list = " + list.get(i).getCartNo());
+		}
+		
 		RequestDispatcher rd = request.getRequestDispatcher("views/cart/cartList.jsp");
 		rd.forward(request, response);
 		
 	}
+	*/
+	
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String writer = String.valueOf(((Member)request.getSession().getAttribute("loginUser")).getUserNo());
+		//System.out.println("Servlet writer : " + writer);
+		Cart c = new CartService().CartList(writer);
+		
+		request.setAttribute("c", c);
+		System.out.println("servlet c : " + c);
+		request.getRequestDispatcher("views/cart/cartList.jsp").forward(request, response);
+}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

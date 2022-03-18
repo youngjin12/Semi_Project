@@ -3,6 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="com.uni.cart.model.vo.Cart" %>
+<%
+	Cart c = (Cart)request.getAttribute("c");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +18,8 @@
 <link href="././resources/css/styles2.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
 <style>
-	.date {
+	
+.date {
   	text-align: right;
    }
    
@@ -64,11 +70,6 @@
 	#cartTable-sku td.product-box {
     padding-left: 0;
 	}
-	
-    .cart-deal-item td:nth-child(2) {
-    width: 80px;
-    overflow: hidden;
-	}
 
     colgroup{
     display: table-column-group;
@@ -79,6 +80,7 @@
     border-spacing: 0;
     text-indent: initial;
 	}
+	
 	
 	body, input, textarea, select, button, table {
     font-family: sans-serif;
@@ -95,12 +97,7 @@
 	.cartTable .head {
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
-    background: #fafafa;
-	}
-	
-	.cartTable .head th {
-    background: #fafafa;
-    text-align: center;
+    background: lightyellow;
 	}
 	
 	.cartTable th {
@@ -108,11 +105,7 @@
     font-size: 13px;
 	}
 
-	tr {
-	    display: table-row;
-	    vertical-align: inherit;
-	    border-color: inherit;
-	}
+
 	
 	.product-name-part {
     border-bottom: 1px solid #e2e5e7;
@@ -145,15 +138,19 @@
     vertical-align: top;
     z-index: 100;
 	}
-	
+
+    .cart-deal-item td:nth-child(2) {
+    width: 350px;
+    overflow: hidden;
+	}
 	
 	.cart-deal-item td:nth-child(3) {
-    width: 0px;
+    width: 60px;
     overflow: hidden;
 	}
 	
 	.cart-deal-item td:nth-child(4) {
-    width: 88px;
+    width: 60px;
 	}
 	
 	.cart-deal-item .unit-total-price {
@@ -178,139 +175,287 @@
 	.bundle-price-total td {
     position: relative;
     padding: 20px 35px 16px 0;
-    background: #f7f7f7;
+    background: lightyellow;
     font-size: 12px;
     line-height: 29px;
     text-align: right;
 	}
 	
 	
+	a, blockquote, body, button, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, pre, select, span, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+    color: #111;
+    font-family: Dotum,\\B3CB\C6C0,sans-serif;
+	}
 	
+	.bundle-price-total .global-total-price-area, .bundle-price-total .rocket-fresh-total-price-area, .bundle-price-total .rocket-install-total-price-area, .bundle-price-total .rocket-total-price-area {
+    display: inline-block;
+	}
 	
+	.sr-only {
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px,1px,1px,1px);
+	}
 	
+	.bundle-price-total .number {
+    display: inline-block;
+    font: normal 15px/15px tahoma;
+    color: #111;
+    vertical-align: 0;
+	}
 	
+	.symbol-minus, .symbol-plus {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin: 0 8px;
+    vertical-align: -5px;
+	}
 	
+	.symbol-plus {
+    background: url(//img1a.coupangcdn.com/image/order/mathematics-symbol.png) no-repeat;
+    background-position: 0 0;
+	}
 	
+	.symbol-equal, .symbol-plus1 {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+	}
 	
+	.symbol-equal {
+    margin: 0 8px;
+    background: url(//img1a.coupangcdn.com/image/order/mathematics-symbol.png) no-repeat;
+    vertical-align: -5px;
+    background-position: -36px 0;
+	}
 	
+	.bundle-price-total .total-order-price.number {
+    font-weight: 700;
+	}
 	
+	.cart-total-price {
+    clear: both;
+    border: 4px solid #c8c8c8;
+    text-align: center;
+	}
 	
+	.cart-total-price__inner {
+    display: inline-block;
+    margin: 0 auto;
+    vertical-align: top;
+	}
 	
+	.cart-total-price .price-area {
+    padding: 20px 15px 18px;
+    font-size: 14px;
+    line-height: 17px;
+    color: #555;
+    text-align: center;
+	}
+	 
+	 .sr-only {
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px,1px,1px,1px);
+	}
+
+	.symbol-plus1 {
+    margin: 0 11px 0 10px;
+    vertical-align: -4px;
+    background: url(//img1a.coupangcdn.com/image/www/newBuy/img_plus_2.gif) no-repeat;
+	}
+	 
+	.symbol-equal, .symbol-plus1 {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+	}
+
+	.cart-total-price em {
+	    padding: 0 4px 0 5px;
+	    font: 700 17px/17px tahoma;
+	    color: #111;
+	}
+
+	.symbol-equal1 {
+	    background: url(//img1a.coupangcdn.com/image/www/newBuy/img_equals_2.gif) no-repeat;
+	}
 	
+	.symbol-equal1, .symbol-minus1 {
+	    display: inline-block;
+	    width: 18px;
+	    height: 18px;
+	    margin: 0 11px 0 10px;
+	    vertical-align: -4px;
+	}
+
+	.cart-total-price .final-order-price {
+	    color: #ea0000;
+	    font-size: 20px;
+	}
 	
+	.faraway-notice {
+    margin-top: 20px;
+    padding: 12px 0 9px;
+    background: #fafafa;
+    font-size: 12px;
+    color: #555;
+    text-align: center;
+    visibility: hidden;
+	}
 	
+	.order-buttons, .summary-area {
+    margin-top: 30px;
+    text-align: center;
+    position: relative;
+	}
 	
+	.goPayment, .goShopping {
+    font-size: 22px;
+    font-weight: 1000;
+    display: inline-block;
+    position: relative;
+    width: 200px;
+    line-height: 18px;
+    border: 2px solid lightgray;
+    border-radius: 4px;
+    padding: 22px 0 19px;
+    text-align: center;
+	}
 	
+	.goShopping {
+    background: white;
+    color: skyblue;
+    margin-right: 5px;
+	}
 	
+	.goPayment {
+    background: skyblue;
+    color: white;
+    
+	}
 	
+	.delete-option {
+    position: relative;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin-top: 3px;
+    background: url(//img1a.coupangcdn.com/image/cart/generalCart/cart_sprite_170201.png) -114px 0 no-repeat;
+    vertical-align: top;
+    z-index: 120;
+	}
 	
-	
-	
-	
-	
-	
-	
-	
+	.option-price-part {
+    float: right;
+    font-size: 12px;
+    line-height: 24px;
+	}
+
+	.unit-cost {
+	    color: #888;
+	    letter-spacing: 0;
+	    vertical-align: top;
+	}
+
 </style>
 </head>
 <body>
-<jsp:include page = "../common/menu2.jsp"/>
+<jsp:include page = "../common/menu.jsp"/>
 
-<section id="contents-cart" class="contents-cart async-content" style="visibility: visible;">        
+<section id="contents-cart" class="contents-cart async-content" style="visibility: visible;">    <!-- 전체 섹션 -->    
         <section class="cart-title">
         <i class="bi-cart-fill me-1"></i>   장바구니
         </section>
         
-    <div id="cartContent" data-faraway="" data-rocket-freemessage="{&quot;rocketFreshFreeShippingRemaingAmount&quot;:&quot;0&quot;,&quot;rocketFreshShippingOverAmount&quot;:&quot;0&quot;,&quot;skuFreeShippingOverAmount&quot;:&quot;19800&quot;, &quot;skuFreeShippingRemaingAmount&quot;:&quot;19800&quot;, &quot;freshLack&quot;:false, &quot;rocketLack&quot;:false }">
-
-    <div class="tabs-wrap">
-	<div class="tabs">
-		
-	</div>
-</div>
+    <div id="cartContent">
     
-        <table class="cartTable" summary="장바구니 상품명, 제품가격, 선택한수량, 총결제비용 정보 및 결제 상품으로 선택,해제 및 수량변경, 삭제 기능 제공표">
-            <caption class="none">장바구니</caption>
-            <colgroup><col width="50"><col width="80"><col width="*"><col width="90"><col width="90"></colgroup>
-            <thead>
+        <table class="cartTable">
+            <caption class="none"></caption> <!-- 여백 생성  -->
+            <colgroup><col width="50"><col width="100"><col width="30"><col width="30"></colgroup><!-- 상품정보 자리 잡아주기 -->
+        <thead>
             <tr class="head">
                 
                 <th scope="colgroup" id="th-product-box" colspan="2">상품정보</th>
                 <th scope="col" id="th-unit-total-price">상품금액</th>
                 <th scope="col" id="th-delivery-fee">배송비</th>
+                
             </tr>
-            </thead>
+        </thead>
             
-                
-
-                
-
-                
-                
-
+    	<tbody id="cartTable-sku">
     
-
-
-
-    <tbody id="cartTable-sku">
-    
-        
-            <tr class="cart-deal-item " data-item-status="CHECKED" data-adult="false" data-bundle-id="18170189112" data-bundle-type="PRODUCT" data-app="" data-group-type="rocket">
+            <tr class="cart-deal-item">
                 
                    
-	                <td class="cart-deal-item__image ">
+	                <td class="cart-deal-item__image" id="pImg">
                         
-                            <a href="//www.coupang.com/vp/products/6236874079?vendorItemId=80200404752" class="moveProduct">
-                                <img src="//thumbnail7.coupangcdn.com/thumbnails/remote/120x120ex/image/rs_quotation_api/vyl6vcyk/1a6aa5d7f5e24e319d1b47a83987cfd3.jpg" width="78" height="78" class="product-img img" alt="앤나인 Hipods Mini 데일리 블루투스 이어폰" data-bundle-id="18170189112">
-                            </a>
+                             <a href="<%=request.getContextPath() %>/detailProduct.do?no=c.getPId()"><img class="card-img-top" src="<%=request.getContextPath() %>/resources/image/c.piName" width=78px height=78px alt="상품이미지" /></a>
                         
                     </td>
                     <td class="product-box">
                         
                         <div class="product-name-part">
                             
-                            <a href="//www.coupang.com/vp/products/6236874079?vendorItemId=80200404752" class="product-name moveProduct modify-color">앤나인 Hipods Mini 데일리 블루투스 이어폰, 화이트</a>
+                            <a href="<%=request.getContextPath() %>/detailProduct.do?no=c.getPId" class="product-name moveProduct modify-color"><%=c.getPName() %></a>
                             
                                 
                             
                         </div>
                         
-                            <div id="80200404752" data-dawn-only="false" class="option-item modify-float" data-quantity="1" data-vendor-id="A00010028" data-vi="80200404752" data-vip="" data-pid="6236874079" data-itemid="12565414376" data-bundle-id="18170189112">
+                            <div id="80200404752" data-dawn-only="false" class="option-item modify-float" data-quantity="1" >
                                 <div class="option-item-info" data-restock-notification-state="false">
-                                    <div class="option-name">
-                                        <span class="option-item-name" style="display:none;">앤나인 Hipods Mini 데일리 블루투스 이어폰, 화이트</span>
-                                   
-                                    </div>
-                                    
-                                                 
-                                        
-                                            <div class="delivery-date rocket modify-padding" style="visibility: visible;">
-                                                <span class="arrive-date" style="display: inline-block;">20일 도착 보장</span>
+                             
+                                            <div class="delivery-date rocket modify-padding">
+                                                <span class="arrive-date" style="display: inline-block; font-size:14px"><strong>20일 도착 보장</strong></span>
 
                                             </div>
-                                        
-                                    
-                                    
+
                                 </div>
-                                <div class="option-price-part" data-sale-price="32740">
+                                <div class="option-price-part" >
                                     
 	
 		<span class="unit-cost" data-sale-price="32740"><span class="sr-only">제품가격</span>32,740원</span>
 		<span class="select-select">
-			<select class="quantity-select" data-url="/memberCartItem/quantity/18170189112/" data-quantity="1" data-all="false" title="앤나인 Hipods Mini 데일리 블루투스 이어폰, 화이트 수량변경">
+		<select class="quantity-select" id="amountChange">
 				
 					
 						<option value="1" selected="selected">1</option>
 					
+						<option value="2">2</option>
+					
+						<option value="3">3</option>
+					
+						<option value="4">4</option>
+					
+						<option value="5">5</option>
+					
+						<option value="6">6</option>
+					
+						<option value="7">7</option>
+					
+						<option value="8">8</option>
+					
+						<option value="9">9</option>
+					
+					<option value="10">10+</option>
 				
 			</select>
 		</span>
 		<span class="select-text">
-			<input type="text" class="quantity-text" title="앤나인 Hipods Mini 데일리 블루투스 이어폰, 화이트 수량변경" maxlength="4" value="1" data-url="/memberCartItem/quantity/18170189112/" data-all="false">
-			<input type="button" class="quantity-chg none" value="수량변경">
+	
 		</span>
 		<span class="unit-price-area"><span class="unit-price"><span class="sr-only">구매가격</span>32,740원</span></span>
-	
+
 
                                     <a href="/memberCartItem/deleteItems?cartItemIds[]=18170189112&amp;itemStatus=CHECKED" data-url="/memberCartItem/deleteItems?cartItemIds[]=18170189112&amp;itemStatus=CHECKED" data-all="false" class="delete-option"><span class="sr-only">앤나인 Hipods Mini 데일리 블루투스 이어폰, 화이트 상품삭제</span></a>
                                     
@@ -323,24 +468,15 @@
                     
                     <td class="unit-total-price">
 	                    
-	
-		
 			
 				<div class="unit-total-sale-price">32,740원</div>
 			
-		
-	
-
-
-                        
-	<img src="//img1a.coupangcdn.com/image/cmg/icon/ios/logo_rocket_large@3x.png" width="56" height="14" class="vendor-badge rocket" alt="로켓배송">
-	<img src="//image8.coupangcdn.com/image/badges/falcon/v1/web/rocketwow-bi-16@2x.png" width="56" height="14" class="rocket-wow" alt="로켓배송">
 
                     </td>
                     
 	                    <td class="delivery-fee" rowspan="1" headers="th-delivery-fee">
                             
-                                <span class="delivery-fee__free">무료</span>
+                                <span class="delivery-fee__free">2,500원</span>
                             
                         </td>
                     
@@ -358,7 +494,7 @@
 					상품가격 <span class="total-product-price number">0</span>원 <span class="coupon-area">
                     
                     <span class="symbol symbol-plus"><span class="sr-only">더하기</span></span>
-					배송비 <span id="rocket-delivery-charge" class="delivery-charge"><strong>무료</strong></span>
+					배송비 <span id="rocket-delivery-charge" class="delivery-charge"><strong>2,500원</strong></span>
 					<span class="symbol symbol-equal"><span class="sr-only">결과는</span></span>
 					주문금액
                   
@@ -370,49 +506,14 @@
     
     </tbody>
 
-
-
-
-
-
-
-
             
         </table>
         
-            <div class="order-table-foot">
-                
-                    <span class="all-select-product">
-						<label>
-							<input title="모든 상품을 결제상품으로 설정" type="checkbox" class="all-deal-select"> <span>전체선택</span><span class="cart-count-bottom">( <em>0</em> / 1 )</span>
-						</label>
-						<a href="javascript:void(0);" class="selected-delete logging" data-login="true" data-view-type="shoppingCart" data-event-name="selectiveDeletionClick" data-log-label="cart-p-deleteMulti" data-coulog-type="clickEvent" data-listener-event-type="click">선택삭제</a>
-						<a href="javascript:void(0);" class="selected-soldout-delete logging" data-login="true" data-view-type="shoppingCart" data-event-name="deleteAllEosAndOosClick" data-log-label="cart-p-outDeleteAll" data-coulog-type="clickEvent">품절/판매종료상품 전체삭제</a>
-					</span>
-                
-                <div class="payment-benefit"></div>
-            </div>
+           
 
             
             <div class="download-coupon-area" style="display: none;"></div>
 
-            
-                <div class="payment-reward-cash-area">
-                    <img class="payment-reward-cash-area__icon" src="//img1a.coupangcdn.com/image/cart/generalCart/ico_cash_m_2x.png">
-                    <h3 class="payment-reward-cash-area__title">캐시적립 혜택</h3>
-                  
-                    <span class="payment-reward-cash-area__desc">쿠페이 머니 결제 시 1% 적립</span>
-                  
-                    <span class="payment-reward-cash-area__desc">[로켓와우 + 쿠페이 계좌이체] 결제 시 2% 적립</span>
-                  
-                    <span class="payment-reward-cash-area__desc">[로켓와우 + 쿠페이 머니] 결제 시 4% 추가적립</span>
-                  
-                    
-                      <a class="payment-reward-cash-area__btn" id="btnSignUpWowMember">로켓와우 무료체험 신청하기</a>
-                    
-                   
-                </div>
-            
 
             
             <div class="cart-total-price" data-total-price="0" data-discount-price="0">
@@ -450,25 +551,18 @@
 
                 
             </div>
-
-
-            
-            <div class="faraway-notice">
-                <strong>도서산간 배송안내 </strong>
-                : 도서산간 추가배송비 발생 시 함께 결제할 수 있습니다. <span class="faraway-address"></span><br>
-                로켓배송은 추가배송비도 무료
-            </div>
+   
 
             
             <div class="order-buttons">
-                <a id="continueShoopingBtn" class="goShopping logging" href="//www.coupang.com" data-view-type="shoppingCart" data-event-name="continuouslyShoppingClick" data-log-label="cart-p-continuouslyShoppingClick" data-coulog-type="clickEvent" data-listener-event-type="click">계속 쇼핑하기</a>
-                <a href="javascript:void(0);" class="goPayment" id="btnPay" data-pay-url="/cart/orderV3?isAllChecked=false">구매하기</a>
+                <a id="continueShoopingBtn" class="goShopping logging" href=<%=request.getContextPath()%>>계속 쇼핑하기</a>
+                <a href="javascript:void(0);" class="goPayment" id="btnPay"><strong>구매하기</strong></a>
                 <div class="item-disabled" style="display: none;"></div>
             </div>
         
         
     
-    <iframe id="ab_iframe" class="ab_test" src="" width="0" height="0" frameborder="0" vspace="0"></iframe>
+    <iframe id="ab_iframe" class="ab_test"width="0" height="0"></iframe> <!-- 여백설정 -->
     
 </div>
 

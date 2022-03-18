@@ -26,6 +26,10 @@
                 <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="<%=request.getContextPath() %>/resources/image/${p.piName}" alt="상품이미지" /></div>
                 <div class="col-md-6">
                 
+     			 <form id="orderStart" action="<%=request.getContextPath()%>/order.do" method="post">
+                
+                    <input type="hidden" name="pId" value="${p.pId}">
+                
                     <div class="small mb-1">
                     	<c:if test= "${fn:contains(p.pName, '프로틴')}">
                     	<h4>프로틴파우더</h4>
@@ -37,9 +41,12 @@
                     	<h4>도시락</h4>
                     	</c:if>
                     </div>
+                    
+                    <input type="hidden" name="pName" value="${p.pName}">
                     <h1 id="title" class="display-5 fw-bolder">${p.pName}</h1>
                     <div class="fs-5 mb-5">
-                       <span id="price" >₩${p.pPrice}</span>원
+                       <input type="hidden" id ="changePrice" name="pPrice" value="${p.pPrice}">
+                       ₩<span id="price" >${p.pPrice}</span>원
                     </div>
 
 
@@ -96,10 +103,13 @@
                     <div>
                         <button class="btn btn-outline-dark flex-shrink-0" type="button">
                             <i class="bi-cart-fill me-1"></i>
-                            장바구니담기 <!--  여기 -->
+                            장바구니담기
                         </button>
-                        <button type="button" class="btn btn-primary"> 주문하기 </button> <!--  여기 -->
+                        <button type="submit" class="btn btn-primary"> 주문하기 </button>
                     </div>
+                    
+                 </form>
+                 
                 </div>
             </div>
         </div>
@@ -123,8 +133,9 @@
 				},
 				
 				success:function(result){
-					$('#price').text('₩'+result);
-				
+					$('#price').text(result);
+					$('#changePrice').val(result);
+
 				},
 				
 				error:function(){
