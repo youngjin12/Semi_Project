@@ -6,6 +6,7 @@
 <%@ page import="com.uni.cart.model.vo.Cart" %>
 <%
 	Cart c = (Cart)request.getAttribute("c");
+	Cart cd = new Cart();
 %>
 
 <!DOCTYPE html>
@@ -376,7 +377,7 @@
         <section class="cart-title">
         <i class="bi-cart-fill me-1"></i>   장바구니
         </section>
-        
+      
     <div id="cartContent">
     
         <table class="cartTable">
@@ -399,14 +400,14 @@
                    
 	                <td class="cart-deal-item__image" id="pImg">
                         
-                             <a href="<%=request.getContextPath() %>/detailProduct.do?no=c.getPId()"><img class="card-img-top" src="<%=request.getContextPath() %>/resources/image/c.piName" width=78px height=78px alt="상품이미지" /></a>
+                             <a href="<%=request.getContextPath() %>/detailProduct.do?no=${c.getPId()}"><img class="card-img-top" src="<%=request.getContextPath() %>/resources/image/${c.getPiName()}" width=78px height=78px alt="상품이미지" /></a>
                         
                     </td>
                     <td class="product-box">
                         
                         <div class="product-name-part">
                             
-                            <a href="<%=request.getContextPath() %>/detailProduct.do?no=c.getPId" class="product-name moveProduct modify-color"><%=c.getPName() %></a>
+                            <a href="<%=request.getContextPath() %>/detailProduct.do?no=<%=c.getPId() %>" class="product-name moveProduct modify-color" style=" text-decoration: none; color: inherit"><b><%=c.getPName() %></b></a>
                             
                                 
                             
@@ -416,20 +417,19 @@
                                 <div class="option-item-info" data-restock-notification-state="false">
                              
                                             <div class="delivery-date rocket modify-padding">
-                                                <span class="arrive-date" style="display: inline-block; font-size:14px"><strong>20일 도착 보장</strong></span>
+                                                <span class="arrive-date" style="display: inline-block; font-size:14px;"><strong>${c.getDDate()}</strong></span>
 
                                             </div>
 
                                 </div>
                                 <div class="option-price-part" >
+                                
+                                <span class="unit-cost"><span class="sr-only">제품가격</span>${c.getPoPrice()}</span>
                                     
-	
-		<span class="unit-cost" data-sale-price="32740"><span class="sr-only">제품가격</span>32,740원</span>
-		<span class="select-select">
-		<select class="quantity-select" id="amountChange">
+		<select class="quantity-select" id="amountChange" name="amountChange">
 				
-					
-						<option value="1" selected="selected">1</option>
+						<option value="<%= c.getPAmount()%>"><%= c.getPAmount()%></option>
+						<option value="1">1</option>
 					
 						<option value="2">2</option>
 					
@@ -450,11 +450,8 @@
 					<option value="10">10+</option>
 				
 			</select>
-		</span>
-		<span class="select-text">
-	
-		</span>
-		<span class="unit-price-area"><span class="unit-price"><span class="sr-only">구매가격</span>32,740원</span></span>
+			
+		<span class="unit-price-area"><span class="unit-price" id="changePrice"><%=c.getPPrice() %></span></span>
 
 
                                     <a href="/memberCartItem/deleteItems?cartItemIds[]=18170189112&amp;itemStatus=CHECKED" data-url="/memberCartItem/deleteItems?cartItemIds[]=18170189112&amp;itemStatus=CHECKED" data-all="false" class="delete-option"><span class="sr-only">앤나인 Hipods Mini 데일리 블루투스 이어폰, 화이트 상품삭제</span></a>
@@ -469,14 +466,14 @@
                     <td class="unit-total-price">
 	                    
 			
-				<div class="unit-total-sale-price">32,740원</div>
+				<div class="unit-total-sale-price" name="ChangePrice"><%=c.getPPrice() %></div>
 			
 
                     </td>
                     
 	                    <td class="delivery-fee" rowspan="1" headers="th-delivery-fee">
                             
-                                <span class="delivery-fee__free">2,500원</span>
+                                <span class="delivery-fee__free"><%=cd.dPrice %>원</span>
                             
                         </td>
                     
@@ -491,14 +488,14 @@
             <td colspan="5">
                 
                 <span class="rocket-total-price-area">
-					상품가격 <span class="total-product-price number">0</span>원 <span class="coupon-area">
+					상품가격 <span class="total-product-price number"  name="ChangePrice" ><%= c.getPPrice() %></span>원 <span class="coupon-area">
                     
                     <span class="symbol symbol-plus"><span class="sr-only">더하기</span></span>
-					배송비 <span id="rocket-delivery-charge" class="delivery-charge"><strong>2,500원</strong></span>
+					배송비 <span id="rocket-delivery-charge" class="delivery-charge"><strong><%=cd.dPrice %>원</strong></span>
 					<span class="symbol symbol-equal"><span class="sr-only">결과는</span></span>
 					주문금액
                   
-                    <span class="total-order-price number">0</span>원
+                    <span class="total-order-price number"  name="ChangePrice2"><%=c.getPPrice()%></span>원
                   
 				</span>
             </span></td>
@@ -556,11 +553,14 @@
             
             <div class="order-buttons">
                 <a id="continueShoopingBtn" class="goShopping logging" href=<%=request.getContextPath()%>>계속 쇼핑하기</a>
-                <a href="javascript:void(0);" class="goPayment" id="btnPay"><strong>구매하기</strong></a>
+                <a href="<%=request.getContextPath() %>/productPayment.do" class="goPayment" id="btnPay"><strong>구매하기</strong></a>
                 <div class="item-disabled" style="display: none;"></div>
             </div>
         
-        
+        <form>
+       	 <input type="hidden" id="title" value="<%=c.getPId()%>">	
+       	 <input type="hidden" id="price" value="<%=c.getPoPrice()%>">	
+        </form>
     
     <iframe id="ab_iframe" class="ab_test"width="0" height="0"></iframe> <!-- 여백설정 -->
     
@@ -569,5 +569,64 @@
 
     </section>
     <jsp:include page = "../common/footer.jsp"/>
+    <script type="text/javascript">
+    
+    $('[name="amountChange"]').change(function(){ 
+    	
+		let q = $('[name="amountChange"]').val();
+		let name = $('#title').val();
+		let p = $('[name="amountChange"]').val() * $('#price').val();
+		let result = $('[name="amountChange"]').val() * $('#price').val();
+		
+		console.log(result)
+		console.log($('[name="amountChange"]').val())
+		console.log($('#price').val())
+		console.log(q)
+		console.log(name)
+		console.log(price)
+	
+		$.ajax({
+			
+			url: "amountChange.do",
+			
+			type: "get",
+			
+			data:{
+				q:q,
+				name:name,
+				p:p
+	
+			},
+			
+			success:function(){
+				
+				$('#changePrice').html(result);
+				$('[name="ChangePrice"]').html(result);
+				$('[name="ChangePrice2"]').html(result+2500);
+				console.log(result)
+				
+			},
+			
+			error:function(){
+		   			console.log("ajax통신실패");
+		   			console.log(result)
+		   		}
+
+			
+		})
+		
+	})
+	
+	
+	window.onload = function(){ 
+		
+		let result = $('[name="amountChange"]').val() * $('#price').val();
+	
+		$('[name="ChangePrice2"]').html(result+2500);
+			
+		}
+	
+    </script>
+    
 </body>
 </html>

@@ -62,11 +62,13 @@ public class CartListServlet extends HttpServlet {
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String writer = String.valueOf(((Member)request.getSession().getAttribute("loginUser")).getUserNo());
+		//System.out.println(String.valueOf(((Member)request.getSession().getAttribute("loginUser")).getUserNo()));
 		//System.out.println("Servlet writer : " + writer);
 		Cart c = new CartService().CartList(writer);
 		
 		request.setAttribute("c", c);
-		System.out.println("servlet c : " + c);
+		//System.out.println("servlet c : " + c);
+		//System.out.println("servlet getPAmount : " + c.getPAmount());
 		request.getRequestDispatcher("views/cart/cartList.jsp").forward(request, response);
 }
 

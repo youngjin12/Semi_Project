@@ -19,7 +19,7 @@ public class JDBCTemplate {
 		Properties prop = new Properties();
 
 		String fileName = JDBCTemplate.class.getResource("/sql/driver/driver.properties").getPath();
-		
+
 		//System.out.println(fileName);
 
 		try {

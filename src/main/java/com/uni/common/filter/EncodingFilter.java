@@ -20,7 +20,7 @@ public class EncodingFilter implements Filter { // javax.servlet.Filter;
 		//System.out.println("인코딩 필터 동작");
 		
 		if(((HttpServletRequest)request).getMethod().equalsIgnoreCase("post")) {
-			//System.out.println("post방식요청됨");
+			System.out.println("post방식요청됨");
 			request.setCharacterEncoding("utf-8");
 		}
 		

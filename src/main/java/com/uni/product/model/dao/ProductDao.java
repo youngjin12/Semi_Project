@@ -22,7 +22,7 @@ public class ProductDao {
 		
 		String fileName = ProductDao.class.getResource("/sql/product/product-query.properties").getPath();
 		
-		//System.out.println("fileName   " + fileName);
+		System.out.println("fileName   " + fileName);
 		
 		try {
 			prop.load(new FileReader(fileName));
@@ -221,6 +221,7 @@ public class ProductDao {
 			if(rs.next()) {
 				p = new Product();
 				p.setpPrice(rs.getInt("P_PRICE"));
+				p.setpIoCount(rs.getInt("P_NUM"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
