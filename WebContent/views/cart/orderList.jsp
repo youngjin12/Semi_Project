@@ -6,7 +6,7 @@
 <%@ page import="com.uni.cart.model.vo.Cart" %>
 <%@ page import="java.util.ArrayList" %>
 <%
-	//ArrayList<Cart> list = //(ArrayList<Cart>)request.getAttribute("list");
+	ArrayList<Cart> list = (ArrayList<Cart>)request.getAttribute("list");
 	Cart cd = new Cart();
 %>
 
@@ -21,7 +21,10 @@
 <link href="././resources/css/styles2.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <style>
+
 	
 .date {
   	text-align: right;
@@ -374,19 +377,10 @@
 </style>
 </head>
 <body>
-<jsp:include page = "../common/menu.jsp"/>
-
-<section id="contents-cart" class="contents-cart async-content" style="visibility: visible;">    <!-- 전체 섹션 -->    
-        <section class="cart-title">
-        <i class="bi-cart-fill me-1"></i>   장바구니
-        </section>
-      
-    <div id="cartContent">
-    <div id="list">
+<jsp:include page = "../common/menu.jsp"/> 
+	<div id="list">
     	<%--모든상품 삽입 --%>
-    </div>
-    <%-- 여기서부터 반복 --%>
-    <script>
+    	   <script>
    	
    		$(function(){
    			
@@ -543,108 +537,110 @@
    		})
    	})
    </script>
-        <%-- 여기까지 반복 --%>
-           
-
-            
-            <div class="download-coupon-area" style="display: none;"></div>
-
-
-            
-            <div class="cart-total-price" data-total-price="0" data-discount-price="0">
-                <div class="cart-total-price__inner">
-                    <div class="price-area">
-                        <h2 class="sr-only" id="cart-total-price">
-                            장바구니 총 주문금액 정보
-                        </h2>
-
-                        총 상품가격
-                        <em class="final-product-price">0</em>원
-                        <span class="final-sale-area">
-                        
-                        </span>
-
-                        <span class="symbol-plus1"><span class="sr-only">더하기</span></span>
-                        총 배송비
-                        <em class="final-delivery-charge">0</em>원
-                        <span class="symbol-equal1"><span class="sr-only">결과는</span></span>
-                        총 주문금액
-                        <em class="final-order-price" data-final-order-price="0">
-                          0원
-                        </em>
-                    </div>
-                </div>
-            </div>
    
-
-            
-            <div class="order-buttons">
-                <a id="continueShoopingBtn" class="goShopping logging" href=<%=request.getContextPath()%>>계속 쇼핑하기</a>
-                <a href="<%=request.getContextPath() %>/orderList.do" class="goPayment" id="btnPay"><strong>구매하기</strong></a>
-                <div class="item-disabled" style="display: none;"></div>
-            </div>
-        
+   
+        </div>
+        <table>
+		<tr>
+			<td>
+				    <p>아임 서포트 결제 모듈 테스트 해보기</p>
+				    <button id="check_module" type="button">아임 서포트 결제 모듈 테스트 해보기</button>
+			</td>
+		</tr>
+		<tr>
+			<td><a id="continueShoopingBtn" class="goShopping logging" href=<%=request.getContextPath()%>>계속 쇼핑하기</a></td>
+		</tr>
+	</table>
+     
+       <jsp:include page = "../common/footer.jsp"/>
        
-    
-    <iframe id="ab_iframe" class="ab_test"width="0" height="0"></iframe> <!-- 여백설정 -->
-    
-</div>
-
-
-    </section>
-    <jsp:include page = "../common/footer.jsp"/>
-    
-    <script type="text/javascript">
-    
-    function change(value, name){
-    	
-		let String = name; // 값이 바뀐 select 이름
-
-    	let count = value; // 바뀐 갯수
-    	let index = String.charAt(String.length-1); // 몇변째상품의 select인지 인덱스 찾기
-    	
-    	let original = $('#original'+index+'').html(); // 값이 바뀐 상품의 1개당 가격 칸
-    	let totprice2 = $('[name="twochangePrice'+index+'"]').html(); // 노란색칸 상품금액(origianl * count) 칸
-    	let pid = $('[name="title'+index+'"]').val(); // 갯수바뀐상품의 상품번호 칸
-    	let changetotal = $('[name="changetotal'+index+'"]').html(); // 노란색칸 주문금액(origianl * count + 2500)	칸
-    	
-    	let result = original * count
-    	console.log(result)
-    	// 바뀐갯수와 * 1개당 가격 => DB에 들어갈 총금액
-    	
-    	
-    	$.ajax({
-			
-			url: "amountChange.do",
-			
-			type: "get",
-			
-			data:{
-					q:count,
-					name:pid,
-					p:result
+          <script>
 	
-				},
+		$("#check_module").click(function () {
 			
-			success:function(){
+			var IMP = window.IMP; // 생략가능
+			
+			IMP.init('imp70634783');
+				// 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+				// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
 				
-				console.log("성공")
-				$('[name="ChangePrice'+index+'"]').html(result);
-				$('[name="twochangePrice'+index+'"]').html(result);
-				$('[name="changetotal'+index+'"]').html(result+2500);
+			IMP.request_pay({
 				
-			},
-			
-			error:function(){
-		   			console.log("ajax통신실패");
-		   			
-		   		}
-		
-			})
-			
-		
-	}
-    </script>
-    
+					pg: 'inicis', // version 1.1.0부터 지원.
+						/*
+							'kakao':카카오페이,
+							html5_inicis':이니시스(웹표준결제)
+							'nice':나이스페이
+							'jtnet':제이티넷
+							'uplus':LG유플러스
+							'danal':다날
+							'payco':페이코
+							'syrup':시럽페이
+							'paypal':페이팔
+						*/
+					pay_method: 'card',
+						/*
+							'samsung':삼성페이,
+							'card':신용카드,
+							'trans':실시간계좌이체,
+							'vbank':가상계좌,
+							'phone':휴대폰소액결제
+						*/
+					merchant_uid: new Date().getTime(),
+						/*
+							merchant_uid에 경우
+							https://docs.iamport.kr/implementation/payment
+							위에 url에 따라가시면 넣을 수 있는 방법이 있습니다.
+							참고하세요.
+							나중에 포스팅 해볼게요.
+						*/
+						
+					name: '주문명:결제테스트',
+					//결제창에서 보여질 이름
+					
+					amount: '1000',
+					//가격
+					
+					buyer_email: 'iamport@siot.do',
+					buyer_name: '구매자이름',
+					buyer_tel: '010-1234-5678',
+					buyer_addr: '서울특별시 강남구 삼성동',
+					buyer_postcode: '123-456',
+				
+				}, function (rsp) {
+					if(rsp.success){
+					$(function(){
+					
+						let date = list[0].dDat;
+						
+						$.ajax({
+							
+							url: "paymentResult.do", //결제성공페이지
+							
+							type: "post",
+							
+							data: {
+
+								date:date
+								
+							},
+							
+						success:function(){
+							
+							
+						}
+							
+							
+							
+							})<%--- ajax 종료지점 --%>
+						})<%--- 함수 종료지점 --%>
+					
+					
+				location.href= "<%=request.getContextPath()%>/paymentResult.do?rsp="+rsp.success;
+					}
+				
+			});
+		});
+</script>
 </body>
 </html>

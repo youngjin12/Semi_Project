@@ -55,8 +55,7 @@ public class Member {
 	}
 	
 	// 주문에 필요한 회원 정보 생성자
-	public Member(int userNo, String userName, String phone, String address, int mileage,
-			int coupon) {
+	public Member(int userNo, String userName, String phone, String address, int mileage, int coupon) {
 		super();
 		this.userNo = userNo;
 		this.userName = userName;

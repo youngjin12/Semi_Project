@@ -124,7 +124,7 @@ public class MemberDao {
 			close(rset);
 			close(pstmt);
 		}
-        System.out.println(list+"다오");
+        //System.out.println(list+"다오");
 		return list;
 	}
 	public Member selectMember(Connection conn, String userId) {
@@ -231,7 +231,7 @@ public class MemberDao {
 		return result;
 	}
 	public int idCheck(Connection conn, String userId) {
-		System.out.println(userId+"다오");
+		//System.out.println(userId+"다오");
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
