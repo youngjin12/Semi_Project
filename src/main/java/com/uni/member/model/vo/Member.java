@@ -9,8 +9,8 @@ public class Member {
 	private String phone;
 	private String address;
 	private int mileage;
-	private int coupon;
 	private String status;
+	private int cid;
 	
 	public Member(String userId, String userPwd, String userName, String phone, String address) {
 		super();
@@ -50,19 +50,19 @@ public class Member {
 		this.phone = phone;
 		this.address = address;
 		this.mileage = mileage;
-		this.coupon = coupon;
 		this.status = status;
 	}
 	
 	// 주문에 필요한 회원 정보 생성자
-	public Member(int userNo, String userName, String phone, String address, int mileage, int coupon) {
+	public Member(int userNo, String userName, String phone, String address, int mileage,
+			int coupon) {
 		super();
 		this.userNo = userNo;
 		this.userName = userName;
 		this.phone = phone;
 		this.address = address;
 		this.mileage = mileage;
-		this.coupon = coupon;
+		this.cid = cid;
 	}
 
 
@@ -102,12 +102,7 @@ public class Member {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public int getCoupon() {
-		return coupon;
-	}
-	public void setCoupon(int coupon) {
-		this.coupon = coupon;
-	}
+
 	public int getMilege() {
 		return mileage;
 	}
@@ -125,7 +120,7 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [userNo=" + userNo + ", userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName
-				+ ", phone=" + phone + ", address=" + address + ", coupon=" + coupon + ", mileage=" + mileage
+				+ ", phone=" + phone + ", address=" + address + ", mileage=" + mileage
 				+ ", status=" + status + "]";
 	}
 	

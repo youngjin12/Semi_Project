@@ -27,7 +27,7 @@
 	}
 </style>
 </head>
-<body>
+<body style=background:#f8f8f8>
  	<jsp:include page = "../common/menu.jsp"/>
     <!-- Product section-->
     <section class="py-5">
@@ -209,6 +209,43 @@
 
     </script>
     
+    <script>
+    $('#cart').click(function(){
+    	
+    	let pId = $('[name="pId"]').val();
+    	let pPrice = $('#changePrice').val();
+    	let amount = $('#numBox').val();
+    	//console.log(pId)
+    	//console.log(pPrice)
+    	//console.log(amount)
+    	
+    	$.ajax({
+    		
+    		url:"productInCart.do",
+    		
+    		data : {
+    			
+    			pId:pId,
+    			pPrice:pPrice,
+    			amount:amount
+    			
+    		},
+    		success:function(){
+    			
+    			let result = confirm("장바구니에 성공적으로 담았습니다! 장바구니로 이동하시겟습니까?");
+    			if(result){
+    				location.href="<%=request.getContextPath()%>/cartList.do";
+    			}
+ 
+    		}
+    		
+    	})<%-- ajax 끝--%>
+    	
+    })
+    
+    </script>
+    
+ 
     <section class="py-5 bg-light">
         <div class="container px-4 px-lg-4 mt-4">
 			<table class="table table-striped">
@@ -255,6 +292,7 @@
 			
         </div>
     </section>
+    
     <script>
     	
     	let pId = ${p.pId};
@@ -319,8 +357,7 @@
 			})
 
     	})
-    	
-   
+
     </script> 
      
     <jsp:include page = "../common/footer.jsp"/>

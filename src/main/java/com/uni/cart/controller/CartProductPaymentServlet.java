@@ -32,7 +32,7 @@ public class CartProductPaymentServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+/*
 		String writer = String.valueOf(((Member)request.getSession().getAttribute("loginUser")).getUserNo());
 
 		ArrayList<Cart> list = new CartService().CartList(writer);
@@ -41,10 +41,10 @@ public class CartProductPaymentServlet extends HttpServlet {
 		//System.out.println("Servlet m : " + m);
 	
 		
-		request.setAttribute("list", list);
-		request.setAttribute("m", m);
+		//request.setAttribute("list", list);
+		//request.setAttribute("m", m);
 
-		request.getRequestDispatcher("views/cart/orderList.jsp").forward(request, response);
+		//request.getRequestDispatcher("views/cart/orderList.jsp").forward(request, response);
 		
 		response.setContentType("application/json; charset=utf-8"); 
 		
@@ -54,7 +54,7 @@ public class CartProductPaymentServlet extends HttpServlet {
 		new Gson().toJson(m, response.getWriter());
 		//System.out.println("Servley list : " + list);
 		
-		System.out.println("Servley list : " + list);
+		System.out.println("Servlet list : " + list);
 		
 		
 		//int q = Integer.parseInt(request.getParameter("q"));
@@ -62,7 +62,16 @@ public class CartProductPaymentServlet extends HttpServlet {
 		//System.out.println(d.dPrice);
 		//System.out.println("servlet c.getPPrice : " + c.getPPrice());
 	}
-
+*/
+		String writer = String.valueOf(((Member)request.getSession().getAttribute("loginUser")).getUserNo());
+		ArrayList<Cart> list = new CartService().CartList(writer);
+		
+		request.setAttribute("list", list);
+		//System.out.println(list);
+		response.setContentType("application/json; charset=utf-8"); 
+		
+		new Gson().toJson(list, response.getWriter());
+	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

@@ -20,7 +20,7 @@ public class MemberDao {
 
 	public MemberDao() {
 		String fileName = MemberDao.class.getResource("/sql/member/member-query.properties").getPath();
-		System.out.println("fileName   " + fileName);
+		//System.out.println("fileName   " + fileName);
 		try {
 			prop.load(new FileReader(fileName));
 		} catch (FileNotFoundException e) {
@@ -56,8 +56,7 @@ public class MemberDao {
 					rset.getString("USER_NAME"),
 					rset.getString("PHONE"),					
 					rset.getString("ADDRESS"),	
-					rset.getInt("MILEAGE"),
-					rset.getInt("C_ID"),		  
+					rset.getInt("MILEAGE"),		  
 					rset.getString("STATUS")
 					);
 		}
@@ -67,7 +66,7 @@ public class MemberDao {
 			close(rset);
 			close(pstmt);
 		}
-		System.out.println(loginUser);
+		//System.out.println(loginUser);
 		return loginUser;
 	}
 	public int insertMember(Connection conn, Member mem) {
@@ -110,8 +109,7 @@ public class MemberDao {
 						                       rset.getString("USER_NAME"),
 						                       rset.getString("PHONE"),
 						                       rset.getString("ADDRESS"),
-						                       rset.getInt("MILEAGE"),
-						                       rset.getInt("C_ID"),
+						                       rset.getInt("MILEAGE"),						                       
 						                       rset.getString("STATUS") );
 						                       
 						                                                
@@ -124,7 +122,7 @@ public class MemberDao {
 			close(rset);
 			close(pstmt);
 		}
-        //System.out.println(list+"다오");
+        System.out.println(list+"다오");
 		return list;
 	}
 	public Member selectMember(Connection conn, String userId) {
@@ -148,8 +146,7 @@ public class MemberDao {
                     rset.getString("USER_NAME"),
                     rset.getString("PHONE"),
                     rset.getString("ADDRESS"),
-                    rset.getInt("MILEAGE"),
-                    rset.getInt("C_ID"),
+                    rset.getInt("MILEAGE"),                   
                     rset.getString("STATUS") );
 		}
 		}catch(SQLException e) {
@@ -231,7 +228,7 @@ public class MemberDao {
 		return result;
 	}
 	public int idCheck(Connection conn, String userId) {
-		//System.out.println(userId+"다오");
+		System.out.println(userId+"다오");
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;

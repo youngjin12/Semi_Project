@@ -34,6 +34,12 @@
         letter-spacing: 0.05rem;
         padding: 0.75rem 1rem;
       }
+      .btn-insert {
+        font-size: 0.9rem;
+        letter-spacing: 0.05rem;
+        padding: 0.3rem 0.5rem;
+      }
+    
     </style>
 </head>
 <body>
@@ -53,7 +59,7 @@
                       <form id = "loginForm" action="<%=request.getContextPath()%>/loginMember.do" method="post" onsubmit="return loginValidate();">
                       <div class="form-floating mb-3">
                      
-                        <input type="id" class="form-control" id="userId" placeholder="아이디를 입력하세요" name="userId">
+                        <input type="id" class="form-control" id="userId" placeholder="아이디를 입력하세요" name="userId" autofocus>
                         
                       </div>
                       <div class="form-floating mb-3">
@@ -71,7 +77,7 @@
                         </form>
                         
                         <div class="text-center">
-                          <button id = "enrollBtn" type="button" onclick="enrollPage();">회원가입</button>
+                          <button class="btn btn-lg btn-primary btn-insert text-uppercase fw-bold mb-1" id = "enrollBtn" type="button" onclick="enrollPage();">회원가입</button>
                           <script>
                            function enrollPage(){
     	                    location.href = "<%= request.getContextPath()%>/newfacego.do"; 

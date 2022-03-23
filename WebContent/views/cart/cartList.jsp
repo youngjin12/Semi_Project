@@ -375,7 +375,8 @@
 </head>
 <body>
 <jsp:include page = "../common/menu.jsp"/>
-
+<div style="margin:50px">
+</div>
 <section id="contents-cart" class="contents-cart async-content" style="visibility: visible;">    <!-- 전체 섹션 -->    
         <section class="cart-title">
         <i class="bi-cart-fill me-1"></i>   장바구니
@@ -396,12 +397,13 @@
    		   		type: "get",
    		   		
    		   		success:function(list){
-   		   	
+   		   			
    		   			let value = "";
    		   			console.log(list)
    		   			for(var i  in list){
 			 
    								value +=  
+   							
    									'<table class="cartTable">'+
    						   		   
    							     '<caption class="none"></caption>'+ <!-- 여백 생성  -->
@@ -410,9 +412,9 @@
    							     '<thead>'+
    							           '<tr class="head">'+
    							               
-   							               '<th scope="colgroup" id="th-product-box" colspan="2">상품정보</th>'+
-   							               '<th scope="col" id="th-unit-total-price">상품금액</th>'+
-   							               '<th scope="col" id="th-delivery-fee">배송비</th>'+
+   							               '<th scope="colgroup" id="th-product-box" colspan="2" style="text-align:center">상품정보</th>'+
+   							               '<th scope="col" id="th-unit-total-price" style="text-align:center">상품금액</th>'+
+   							               '<th scope="col" id="th-delivery-fee" style="text-align:center">배송비</th>'+
    							               
    							           '</tr>'+
    							     '</thead>'+
@@ -529,10 +531,11 @@
    						       	 '<input type="hidden" id="title'+i+'" name="title'+i+'" value="'+list[i].pId+'">'+	
    						       	 '<input type="hidden" id="price'+i+'" value="'+list[i].poPrice+'">'+	
    						     '</form>' <%-- 본문 끝--%>
-   							
+   								
    		   			} <%-- for문 끝--%>
    		   		
    		   		$('#list').html(value);
+   		   		
    		   		//console.log(list)
 
    	   		},
@@ -580,7 +583,7 @@
             
             <div class="order-buttons">
                 <a id="continueShoopingBtn" class="goShopping logging" href=<%=request.getContextPath()%>>계속 쇼핑하기</a>
-                <a href="<%=request.getContextPath() %>/orderList.do" class="goPayment" id="btnPay"><strong>구매하기</strong></a>
+                <button class="goPayment" id="btnPay"><strong>구매하기</strong></button>
                 <div class="item-disabled" style="display: none;"></div>
             </div>
         
@@ -595,6 +598,7 @@
     <jsp:include page = "../common/footer.jsp"/>
     
     <script type="text/javascript">
+    
     
     function change(value, name){
     	
@@ -645,6 +649,20 @@
 		
 	}
     </script>
+   
+   <script>
+   	$('#btnPay').click(function(){
+   		
+
+   		location.href="<%=request.getContextPath()%>/orderList.do";
+   		
+   		location.href="<%=request.getContextPath()%>/paymentMember.do";
+   		
+   		
+   	})
+   		
+   	 
+   </script>
     
 </body>
 </html>

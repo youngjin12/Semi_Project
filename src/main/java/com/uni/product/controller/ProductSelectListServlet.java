@@ -38,27 +38,9 @@ public class ProductSelectListServlet extends HttpServlet {
 		
 		ArrayList<Product> list = new ProductService().selectListProduct(category);
 		
-		// 전체상품중에 프로틴 제품은 포장용량 500 인것만 골라서 반환
-		ArrayList<Product> changelist = new ArrayList<Product>();
-		if(category == 2) {
-			for(Product p : list) {
-				if(p.getpQuantity() == 500) {
-					changelist.add(p);
-					
-				}
-			}
-			request.setAttribute("list", changelist);
-			response.setContentType("application/json; charset=utf-8"); 
-			new Gson().toJson(list, response.getWriter());
-		} else {
-			request.setAttribute("list", list);
-			response.setContentType("application/json; charset=utf-8"); 
-			new Gson().toJson(list, response.getWriter());
-		}
-	
-		
-		
-		
+		response.setContentType("application/json; charset=utf-8"); 
+		new Gson().toJson(list, response.getWriter());
+
 	}
 
 	/**
