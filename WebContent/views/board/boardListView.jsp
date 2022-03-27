@@ -61,11 +61,13 @@
                   <table class="table" id="blist">
                   
                     <thead class="text-primary">
-                      <th>No</th>
-                      <th>Category</th>
-                      <th>Writer</th>
-                      <th>Date</th>
-                      <th>Count</th>
+						<tr>
+                    		<th>No</th>
+		                    <th>Category</th>
+		                    <th>Writer</th>
+		                    <th>Date</th>
+		                    <th>Count</th>
+                    	</tr>
                     </thead>
                     
                     <tbody id="boardList">
@@ -86,11 +88,11 @@
 		                	<c:forEach items="${list}" varStatus="st">
 			                 	<%-- st.index : 0부터 순서대로 인덱스 실행 --%>
 			                 	<tr>
-			                     <td>${list[st.index].boardNo}</td>
-			                     <td>${list[st.index].category}</td>
-			                     <td>${list[st.index].boardWriter}</td>
-			                     <td>${list[st.index].createDate}</td>
-			                     <td>${list[st.index].count}</td>
+			                    	<td>${list[st.index].boardNo}</td>
+			                    	<td>${list[st.index].category}</td>
+			                    	<td>${list[st.index].boardWriter}</td>
+			                    	<td>${list[st.index].createDate}</td>
+			                    	<td>${list[st.index].count}</td>
 			                   	</tr>
 			                 </c:forEach>
 			            </c:if>
@@ -166,12 +168,12 @@
            <option value="title">제목</option>
            <option value="content">내용</option>
         </select>
-        <input type="search" name="search">
+        <input type="search" id="search" name="search">
         <button type="submit">검색하기</button>
   	</form>
 	
 	
-     <div id="insertBtn" align="center">
+    <div id="insertBtn" align="center">
 		<%-- 클릭 시 작성하기 폼으로 화면 전환하는 서블릿 연결 --%>
         <button onclick="location.href='<%=request.getContextPath()%>/boardEnrollForm.do'">작성하기</button>
     </div>
@@ -243,7 +245,7 @@
 	   					// 
 		   				let url = "<%=request.getContextPath()%>/boardDetailPwdCheck.do?bno="+bno;
 		   				let name = "boardPwdCheckPopup";
-	   					let option = "width = 500, height = 300, top = 100, left = 200, toolbar = yes, location = no"
+	   					let option = "width = 500, height = 300, position = absolute , top = 50%, left = 50%"
 						
 		   				open(url, name, option);
 	   				}

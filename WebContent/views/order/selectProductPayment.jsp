@@ -2,12 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.uni.cart.model.vo.Cart" %>
-<%@ page import="java.util.ArrayList" %>
 <%
-	ArrayList<Cart> list = (ArrayList<Cart>)request.getAttribute("list");
-	Cart cd = new Cart();
+	
+	Cart c = (Cart)(request.getAttribute("c"));
+	int pPrice = (int)(request.getAttribute("pPrice"));
+ 	int pQ = (int)request.getAttribute("pQ");
+
 %>
 
 <!DOCTYPE html>
@@ -378,169 +379,149 @@
 </head>
 <body>
 <jsp:include page = "../common/menu.jsp"/> 
-	<div id="list">
-    	<%--모든상품 삽입 --%>
-    	   <script>
-   	
-   		$(function(){
-   			
-   			$.ajax({
-   		   		url: "cartListData.do",
-   		   		
-   		   		type: "get",
-   		   		
-   		   		success:function(list){
-   		   	
-   		   			let value = "";
-   		   			console.log(list)
-   		   			for(var i  in list){
-			 
-   								value +=  
-   									'<table class="cartTable">'+
+<br><br><br>
+<section id="contents-cart" class="contents-cart async-content" style="visibility: visible;">    <!-- 전체 섹션 -->    
+	
+        <section class="cart-title">
+        주문/결제
+        </section>
+         	 <form id="listInfo" action="<%=request.getContextPath()%>/pay">
+   									<table class="cartTable">
    						   		   
-   							     '<caption class="none"></caption>'+ <!-- 여백 생성  -->
-   							     '<colgroup><col width="50"><col width="100"><col width="30"><col width="30"></colgroup>'+ <!-- 상품정보 자리 잡아주기 -->
-   							     
-   							     '<thead>'+
-   							           '<tr class="head">'+
+   							     <caption class="none"></caption> <!-- 여백 생성  -->
+   							     <colgroup><col width="50"><col width="100"><col width="30"><col width="30"></colgroup> <!-- 상품정보 자리 잡아주기 -->
+   							   
+   							     <thead>
+   							           <tr class="head">
    							               
-   							               '<th scope="colgroup" id="th-product-box" colspan="2">상품정보</th>'+
-   							               '<th scope="col" id="th-unit-total-price">상품금액</th>'+
-   							               '<th scope="col" id="th-delivery-fee">배송비</th>'+
+   							       	   <th scope="colgroup" id="th-product-box" colspan="2" style="text-align:center">상품정보</th>
+						               <th scope="col" id="th-unit-total-price" style="text-align:center">상품금액</th>
+						               <th scope="col" id="th-delivery-fee" style="text-align:center">배송비</th>
    							               
-   							           '</tr>'+
-   							     '</thead>'+
+   							           </tr>
+   							     </thead>
    						           
-   						   		'<tbody id="cartTable-sku">'+
+   						   		<tbody id="cartTable-sku">
    						   
-   						           '<tr class="cart-deal-item">'+
+   						           <tr class="cart-deal-item">
    						               
-   						           		'<td class="cart-deal-item__image" id="pImg">'+
+   						           		<td class="cart-deal-item__image" id="pImg">
    						                       
-   						                   '<a href="<%=request.getContextPath() %>/detailProduct.do?no='+list[i].pId+'"><img class="card-img-top" src="<%=request.getContextPath() %>/resources/image/'+list[i].piName+'" width=78px height=78px alt="상품이미지" /></a>'+
+   						                   <a href="<%=request.getContextPath() %>/detailProduct.do?no=<%=c.getPId()%>"><img class="card-img-top" src="<%=request.getContextPath() %>/resources/image/<%=c.getPiName() %>" width=78px height=78px alt="상품이미지" /></a>
    						                     
-   						                '</td>'+
-   						                   '<td class="product-box">'+
+   						                </td>
+   						                   <td class="product-box">
    						                       
-   						                       '<div class="product-name-part">'+
+   						                       <div class="product-name-part">
    						                           
-   						                           '<a href="<%=request.getContextPath() %>/detailProduct.do?no='+list[i].pId+'" class="product-name moveProduct modify-color" style=" text-decoration: none; color: inherit"><b>'+list[i].pName+'</b></a>'+
+   						                           <a href="<%=request.getContextPath() %>/detailProduct.do?no=<%=c.getPId()%>" class="product-name moveProduct modify-color" style=" text-decoration: none; color: inherit"><b><%=c.getPName() %></b></a>
    						                           
-   						                       '</div>'+
+   						                       </div>
    						                       
-   						                       '<div id="80200404752" data-dawn-only="false" class="option-item modify-float" data-quantity="1" >'+
+   						                       <div id="80200404752" data-dawn-only="false" class="option-item modify-float" data-quantity="1" >
    						                       
-   						                           '<div class="option-item-info" data-restock-notification-state="false">'+
+   						                           <div class="option-item-info" data-restock-notification-state="false">
    						                            
-   						                                '<div class="delivery-date rocket modify-padding">'+
+   						                                <div class="delivery-date rocket modify-padding">
    						                                
-   						                                     '<span class="arrive-date" style="display: inline-block; font-size:14px;"><strong>'+list[i].dDate+'</strong></span>'+
+   						                                     <span class="arrive-date" style="display: inline-block; font-size:14px;"><strong><%=c.getDDate() %></strong></span>
    						                                  
-   						                                '</div>'+
+   						                                </div>
 
-   						                           '</div>'+
+   						                           </div>
    						                           
-   						                                '<div class="option-price-part" >'+
+   						                                <div class="option-price-part" >
    						                               
-   						                               		'<span class="unit-cost" id="original'+i+'">'+list[i].poPrice+'</span>'+
+   						                               		<span class="unit-cost" id="original"><%=c.getPoPrice() %></span>
    						                                   
-   																'<select class="quantity-select" id="amountChange" name="amountChange'+i+'" onchange="change(this.value, this.name)" >'+
+   																<select class="quantity-select" id="amountChange" name="amountChange" onchange="change(this.value, this.name)" >
    																		
-   																		'<option>'+list[i].pAmount+'</option>'+
+   																		<option><%=pQ %></option>
    																		
-   																		'<option value="1">1</option>'+
+   																		<option value="1">1</option>
    																	
-   																		'<option value="2">2</option>'+
+   																		<option value="2">2</option>
+   																		<option value="3">3</option>
+   															
+   																		<option value="4">4</option>
    																	
-   																		'<option value="3">3</option>'+
+   																		<option value="5">5</option>
    																	
-   																		'<option value="4">4</option>'+
+   																		<option value="6">6</option>
    																	
-   																		'<option value="5">5</option>'+
+   																		<option value="7">7</option>
    																	
-   																		'<option value="6">6</option>'+
+   																		<option value="8">8</option>
    																	
-   																		'<option value="7">7</option>'+
+   																		<option value="9">9</option>
    																	
-   																		'<option value="8">8</option>'+
-   																	
-   																		'<option value="9">9</option>'+
-   																	
-   																		'<option value="10">10+</option>'+
+   																		<option value="10">10+</option>
    																		
-   																'</select>'+
-   																
-   						                                   		'<a href="/memberCartItem/deleteItems?cartItemIds[]=18170189112&amp;itemStatus=CHECKED" data-url="/memberCartItem/deleteItems?cartItemIds[]=18170189112&amp;itemStatus=CHECKED" data-all="false" class="delete-option"><span class="sr-only">'+list[i].pName+' 상품삭제</span></a>'+
-   						                                   
-   						                                '</div>'+
+   																</select>
+   																   						                                   
+   						                                </div>
    						                         
-   						                         '</div>'+
+   						                         </div>
    						                          
-   						                   '</td>'+
+   						                   </td>
    						                   
-   						                   '<td class="unit-total-price">'+
+   						                   <td class="unit-total-price">
    							                    
-   											   '<div class="unit-total-sale-price" name="twochangePrice'+i+'">'+list[i].pPrice+'</div>'+
+   											   <div class="unit-total-sale-price" name="twochangePrice'+i+'"><%=pPrice %></div>
    									
-   										   '</td>'+
-   						                   
-   							               '<td class="delivery-fee" rowspan="1" headers="th-delivery-fee">'+
+   										   </td>
+   						                  
+   							               <td class="delivery-fee" rowspan="1" headers="th-delivery-fee">
    						                           
-   						                       '<span class="delivery-fee__free"  name="dPrice">'+<%=cd.dPrice%>+'원</span>'+
+   						                       <span class="delivery-fee__free"  name="dPrice">2500원</span>
    						                           
-   						                   '</td>'+
+   						                   </td>
    						                      
-   						           '</tr>'+
+   						           </tr>
    							        
-   						       	   '<tr class="special-gift-area" style="display: none;"></tr>'+
+   						       	   <tr class="special-gift-area" style="display: none;"></tr>
    						       	   
-   						       	   '<tr class="bundle-price-total">'+
+   						       	   <tr class="bundle-price-total">
    						       	   
-   						           	  '<td colspan="5">'+
+   						           	  <td colspan="5">
    						               
-   						                 '<span class="rocket-total-price-area">상품가격'+
+   						                 <span class="rocket-total-price-area">상품가격
    						                 
-   											 '<span class="total-product-price number"  name="ChangePrice'+i+'" >'+list[i].pPrice+'</span>원 <span class="coupon-area">'+
+   											 <span class="total-product-price number"  name="ChangePrice" ><%=pPrice %></span>원 <span class="coupon-area">
    						                   
-   							                     '<span class="symbol symbol-plus"><span class="sr-only">더하기</span></span>'+
+   							                     <span class="symbol symbol-plus"><span class="sr-only">더하기</span></span>
    							                     
-   												 '배송비 <span id="rocket-delivery-charge" class="delivery-charge" name="dPrice"><strong>'+<%=cd.dPrice%>+'원</strong></span>'+
+   												 배송비 <span id="rocket-delivery-charge" class="delivery-charge" name="dPrice"><strong>2500원</strong></span>
    												 
-   												 '<span class="symbol symbol-equal"><span class="sr-only">결과는</span></span>'+
+   												 <span class="symbol symbol-equal"><span class="sr-only">결과는</span></span>
    												 
-   												 '주문금액 <span class="total-order-price number"  name="changetotal'+i+'">'+(list[i].pPrice +2500)+'</span>원'+
+   												 주문금액 <span class="total-order-price number"  name="changetotal"><%=pPrice + 2500 %></span>원
    						                 
-   										     '</span>'+
-   						           		  '</span>'+
-   						           	   '</td>'+
-   						      	    '</tr>'+
+   										     </span>
+   						           		  </span>
+   						           	   </td>
+   						      	    </tr>
    						   
-   						   		'</tbody>'+
-
-   						     '</table>'+
+   						   		</tbody>
+   						     </table>
    							                  
-   						   	 '<form>'+
-   						       	 '<input type="hidden" id="title'+i+'" name="title'+i+'" value="'+list[i].pId+'">'+	
-   						       	 '<input type="hidden" id="price'+i+'" value="'+list[i].poPrice+'">'+	
-   						     '</form>' <%-- 본문 끝--%>
-   							
-   		   			} <%-- for문 끝--%>
-   		   		
-   		   		$('#list').html(value);
-   		   		//console.log(list)
-
-   	   		},
-		   	   	error:function(){
-			   		console.log("ajax통신실패");
-			   		
-				}
-   		})
-   	})
-   </script>
-   
-   
-        </div>
-        <table>
+   						
+   						 	 <input type="hidden" id="title" name="title" value="'+list[i].pId+'">
+						       	 <input type="hidden" id="price" value="'+list[i].poPrice+'">
+						       	 <input type="hidden" id="total" name="total'+i+'" value="">
+						       	 
+   						     
+   						      	 <input type="hidden" id="dDate" value="'+list[0].dDate+'">
+   						     	 <input type="hidden" id="lZero" value="'+list[0].pName+'">
+   						   		 <input type="hidden" id="lSize" value="'+list.length+'">
+   						     </form> <%-- 본문 끝--%>
+        
+	
+    	<div>
+    		<p> ${totPrice}</p>
+    		<input id="dRequest" name="dRequest" type="text">
+    	</div>
+	 <table>
 		<tr>
 			<td>
 				    <p>아임 서포트 결제 모듈 테스트 해보기</p>
@@ -551,11 +532,15 @@
 			<td><a id="continueShoopingBtn" class="goShopping logging" href=<%=request.getContextPath()%>>계속 쇼핑하기</a></td>
 		</tr>
 	</table>
-     
-       <jsp:include page = "../common/footer.jsp"/>
-       
-          <script>
+	<iframe id="ab_iframe" class="ab_test"width="0" height="0"></iframe> 
+	</section>
+	<jsp:include page = "../common/footer.jsp"/>
 	
+	  
+   							
+	<script>
+	console.log(<%=pPrice %>)
+	console.log(<%=c.getPoPrice() %>)
 		$("#check_module").click(function () {
 			
 			var IMP = window.IMP; // 생략가능
@@ -595,52 +580,92 @@
 							나중에 포스팅 해볼게요.
 						*/
 						
-					name: '주문명:결제테스트',
+					name: '주문명:  <%=c.getPName()%>',
 					//결제창에서 보여질 이름
 					
-					amount: '1000',
+					amount: <%=pPrice%> <%--$('[name="total"]').val()--%>
 					//가격
 					
-					buyer_email: 'iamport@siot.do',
-					buyer_name: '구매자이름',
-					buyer_tel: '010-1234-5678',
-					buyer_addr: '서울특별시 강남구 삼성동',
-					buyer_postcode: '123-456',
+					//buyer_email: 'iamport@siot.do',
+					//buyer_name: '${m.userName},
+					//buyer_tel: ${m.phone},
+					//buyer_addr: '${m.address}',
+					//buyer_postcode: '123-456',
+					//m_redirect_url: "http://localhost:8030/pleaseCal_Backup/paymentResult.do",
 				
-				}, function (rsp) {
-					if(rsp.success){
-					$(function(){
-					
-						let date = list[0].dDat;
-						
-						$.ajax({
-							
-							url: "paymentResult.do", //결제성공페이지
-							
-							type: "post",
-							
-							data: {
+			}<%-- 584번 중괄호--%>, function(rsp){
+				
+				let dDate = $('#dDate').val();
+				
+				let dRequest = $('[name=dRequest]').val();
+				let re = rsp.success;
+				console.log(dDate)
+				console.log(re)				
+				let data = {
+					dDate:dDate,
+					re:re
+				};
+				console.log(re)
 
-								date:date
-								
-							},
+				location.href="<%=request.getContextPath()%>/paymentResult.do?re="+re+"&dRequest="+dRequest;
+
+
+					});<%--- 함수 종료지점 --%>
 							
-						success:function(){
-							
-							
-						}
-							
-							
-							
-							})<%--- ajax 종료지점 --%>
-						})<%--- 함수 종료지점 --%>
-					
-					
-				location.href= "<%=request.getContextPath()%>/paymentResult.do?rsp="+rsp.success;
-					}
-				
-			});
-		});
+			}); <%---클릭--%>
+		
 </script>
+
+    <script type="text/javascript">
+    
+    
+    function change(value, name){
+    	
+		let String = name; // 값이 바뀐 select 이름
+
+    	let count = value; // 바뀐 갯수
+    	let index = String.charAt(String.length-1); // 몇변째상품의 select인지 인덱스 찾기
+    	
+    	let original = $('#original'+index+'').html(); // 값이 바뀐 상품의 1개당 가격 칸
+    	let totprice2 = $('[name="twochangePrice'+index+'"]').html(); // 노란색칸 상품금액(origianl * count) 칸
+    	let pid = $('[name="title'+index+'"]').val(); // 갯수바뀐상품의 상품번호 칸
+    	let changetotal = $('[name="changetotal'+index+'"]').html(); // 노란색칸 주문금액(origianl * count + 2500)	칸
+    	
+    	let result = original * count
+    	console.log(result)
+    	// 바뀐갯수와 * 1개당 가격 => DB에 들어갈 총금액
+    	
+    	
+    	$.ajax({
+			
+			url: "amountChange.do",
+			
+			type: "get",
+			
+			data:{
+					q:count,
+					name:pid,
+					p:result
+	
+				},
+			
+			success:function(){
+				
+				console.log("성공")
+				$('[name="ChangePrice'+index+'"]').html(result);
+				$('[name="twochangePrice'+index+'"]').html(result);
+				$('[name="changetotal'+index+'"]').html(result+2500);
+				
+			},
+			
+			error:function(){
+		   			console.log("ajax통신실패");
+		   			
+		   		}
+		
+			})
+	}
+    </script>
+
 </body>
 </html>

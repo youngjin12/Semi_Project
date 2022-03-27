@@ -38,11 +38,25 @@ public class ProductInCartServlet extends HttpServlet {
 		String pId = String.valueOf(request.getParameter("pId"));
 		String pPrice = String.valueOf(request.getParameter("pPrice"));
 		String amount = String.valueOf(request.getParameter("amount"));
-
-		System.out.println(writer + pId + pPrice + amount);
-		int result = new CartService().insertProduct(writer, amount,  pPrice, pId);
+		//System.out.println("pPrice ====================" + pPrice);
 		
-		System.out.println("insert 결과 : " + result);
+
+		Cart c = new CartService().selectPId(writer, pId);
+		//System.out.println("c ===============" + c);
+		if(c.getPId() > 0) {
+			
+			int nAmount = c.getPAmount() + Integer.parseInt(amount);
+			int nPrice = Integer.parseInt(pPrice) * nAmount;
+			//System.out.println(nPrice);
+
+			int result2 = new CartService().PlusAmount(nAmount, writer, pId, nPrice);
+		}else {
+		//System.out.println(writer + pId + pPrice + amount);
+		int result = new CartService().insertProduct(writer, amount,  pPrice, pId);
+		//System.out.println("insert 결과 : " + result);
+		};
+		
+		
 	}
 
 	/**

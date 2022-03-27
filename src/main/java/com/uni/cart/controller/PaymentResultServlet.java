@@ -2,6 +2,7 @@ package com.uni.cart.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.uni.cart.model.service.CartService;
+import com.uni.cart.model.vo.Cart;
+import com.uni.member.model.vo.Member;
+import com.uni.order.model.service.OrdertService;
+import com.uni.order.model.vo.Order;
 /**
  * Servlet implementation class PaymentResultServlet
  */
@@ -30,21 +36,76 @@ public class PaymentResultServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String writer = String.valueOf(((Member)request.getSession().getAttribute("loginUser")).getUserNo());
 		String rsp = request.getParameter("re");
-		String dDate = request.getParameter("dDate");
-		System.out.println("re , dDate : " + rsp);
+		String dRequest = request.getParameter("dRequest");
 		
+		ArrayList<Cart> list = new CartService().CartList(writer);
+		
+		long orderNumber = new Date().getTime();
+		System.out.println(orderNumber);
+		String orderN = String.valueOf(orderNumber).substring(7);
+		int orderNo = Integer.parseInt(orderN);
+		int userNo = Integer.parseInt(writer);
+		Date d = new Date();
+		//System.out.println(orderN);
+		
+		
+		int totP = 2500;
+		int totA = 0;
+		int cartN = 0;
+		Date cartD = null;
+		
+		for(int i = 0; i < list.size(); i++) {
+			
+			totP += list.get(i).getPPrice();
+			totA += list.get(i).getPAmount();
+			cartN = list.get(0).getCartNo();
+			d = list.get(0).getDDate();
+		}
+		Order o = new Order(orderNo, userNo, cartN, totP, totA, dRequest);
+		String dDate = String.valueOf(d);
+		//System.out.println("totP + totA : =========" + totP + "==== " + totA);
+		//System.out.println("list =============" + list);
+		
+
+
+		//System.out.println(list.get(0).getPPrice());
+		
+		for(int i = 0; i < list.size(); i++) {
+			
+			int amount = list.get(i).getCartNo();
+			
+			
+		}
+		
+
+		
+		//System.out.println("rsp , dDate" + rsp + "======="+ dRequest);
+		//String dDate = request.getParameter("data");
+		//String data = request.getParameter("data");
+		
+		//System.out.println("re , dDate : 111111111");
+		//request.setAttribute("dDate",dDate);
 		//SimpleDateFormat
 		
+		
+		
 		if(rsp.equals("true")) {
-			
+		
+
+		
+		int result = new CartService().updateCart(writer);
+		int result2 = new OrdertService().insertOrder(o)	;
+
 		String msg = "결제가 성공적으로 완료되었습니다. <br> 도착 예정시간은 약 " + dDate + "일 입니다.";
-		System.out.println( msg);
+		//System.out.println( msg);
 		request.setAttribute("msg", msg);
 		request.getRequestDispatcher("views/cart/paymentResult.jsp").forward(request, response);
 			
 		}
 		
+		response.sendRedirect("cartList.do");
 	}
 
 	/**

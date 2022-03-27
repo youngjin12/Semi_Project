@@ -35,13 +35,12 @@ public class PaymentProductServlet extends HttpServlet {
 	
 		ArrayList<Cart> list = new ArrayList<>();
 		String io = request.getParameter("io");
-		System.out.println(io);
-		
+		//System.out.println(io);
+	
 		
 		list = new CartService().CartList(io);
 		
 		request.setAttribute("list", list);
-
 		
 		response.setContentType("application/json; charset=utf-8"); 
 	

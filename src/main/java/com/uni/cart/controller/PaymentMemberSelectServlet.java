@@ -32,10 +32,14 @@ public class PaymentMemberSelectServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String writer = String.valueOf(((Member)request.getSession().getAttribute("loginUser")).getUserNo());
 		Member m = new CartService().MemberInfo(writer);
+		int totPrice = Integer.parseInt(request.getParameter("total0"));
 		
+		
+		request.setAttribute("totPrice", totPrice);
+		//System.out.println("totPrice" + totPrice);
 		request.setAttribute("m", m);
 		
-		//new Gson().toJson(m, response.getWriter());
+		//new Gson().object(m, response.getWriter());
 		//System.out.println("servlet m  : " + m);
 		request.getRequestDispatcher("views/cart/productPayment.jsp").forward(request, response);
 		//response.sendRedirect("orderProductList.do");

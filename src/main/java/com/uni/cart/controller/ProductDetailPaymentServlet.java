@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.uni.cart.model.service.CartService;
+import com.uni.cart.model.vo.Cart;
+
 /**
  * Servlet implementation class ProductDetailPaymentServlet
  */
@@ -26,8 +29,24 @@ public class ProductDetailPaymentServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		int pId = Integer.parseInt(request.getParameter("pId"));
+		int pQ = Integer.parseInt(request.getParameter("numBox"));
+		int poPrice =  Integer.parseInt(request.getParameter("pPrice"));
+		
+		
+		
+		//System.out.println("pId + btnradio ==========" + pId + " =====" + pQ);
+		
+		Cart c = new CartService().selectProduct(pId);
+		
+		int pPrice = poPrice * pQ;
+		//System.out.println("pPrice + poPrice ======" + pPrice + "====="+ poPrice);
+		request.setAttribute("c", c);
+		request.setAttribute("pPrice", pPrice);
+		request.setAttribute("pQ", pQ);
+		
+		request.getRequestDispatcher("views/order/selectProductPayment.jsp").forward(request, response);
+		
 	}
 
 	/**

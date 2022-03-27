@@ -56,5 +56,13 @@ public class Cart {
 		this.dDate = dDate;
 		
 	}
+	// selectProduct
+	public Cart(String piName, String pName, Date dDate) {
+		super();
+		this.piName = piName;
+		this.pName = pName;
+		this.dDate = dDate;
+		
+	}
 	
 }

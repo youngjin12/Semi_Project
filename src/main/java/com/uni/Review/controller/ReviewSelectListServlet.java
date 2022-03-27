@@ -52,12 +52,12 @@ public class ReviewSelectListServlet extends HttpServlet {
 		} 
 		
 		ArrayList<Review> list = new ReviewService().selectReviewList(pId, plusId, plusId2);
-		
-		if(list != null) {
-			request.setAttribute("list", list);
-			response.setContentType("application/json; charset=utf-8"); 
-			new Gson().toJson(list, response.getWriter());
-		} 
+		System.out.println(list);
+
+		request.setAttribute("list", list);
+		response.setContentType("application/json; charset=utf-8"); 
+		new Gson().toJson(list, response.getWriter());
+
 
 		
 	}

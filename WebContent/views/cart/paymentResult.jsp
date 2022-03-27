@@ -8,6 +8,7 @@
 </head>
 <body>
 <jsp:include page = "../common/menu.jsp"/>
+	<br><br><br><br><br><br><br>
 	<div>
 		<p> ${msg}</p>
 	</div>

@@ -2,6 +2,7 @@ package com.uni.cart.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,17 +34,23 @@ public class CartListDataServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String writer = String.valueOf(((Member)request.getSession().getAttribute("loginUser")).getUserNo());
-		//System.out.println("Servlet writer : " + writer);
-		ArrayList<Cart> list = new CartService().CartList(writer);
+		Member user = ((Member)request.getSession().getAttribute("loginUser"));
+		//System.out.println(user);
+		//if(!user.equals("null")) {
 		
-		request.setAttribute("list", list);
-
+			//System.out.println("여기가 찍히나?");
+			String writer = String.valueOf(((Member)request.getSession().getAttribute("loginUser")).getUserNo());
+			//System.out.println(writer);
+			//System.out.println("Servlet writer : " + writer);
+			ArrayList<Cart> list = new CartService().CartList(writer);
+			
+			request.setAttribute("list", list);
+			
+			
+			response.setContentType("application/json; charset=utf-8"); 
 		
-		response.setContentType("application/json; charset=utf-8"); 
-	
-		new Gson().toJson(list, response.getWriter());
-		//System.out.println("list : " + list);
+			new Gson().toJson(list, response.getWriter());
+			//System.out.println("list : " + list);
 	}
 
 	/**
