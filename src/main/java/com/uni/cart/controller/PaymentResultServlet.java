@@ -54,7 +54,6 @@ public class PaymentResultServlet extends HttpServlet {
 		int totP = 2500;
 		int totA = 0;
 		int cartN = 0;
-		Date cartD = null;
 		
 		for(int i = 0; i < list.size(); i++) {
 			
@@ -65,47 +64,17 @@ public class PaymentResultServlet extends HttpServlet {
 		}
 		Order o = new Order(orderNo, userNo, cartN, totP, totA, dRequest);
 		String dDate = String.valueOf(d);
-		//System.out.println("totP + totA : =========" + totP + "==== " + totA);
-		//System.out.println("list =============" + list);
-		
 
-
-		//System.out.println(list.get(0).getPPrice());
-		
-		for(int i = 0; i < list.size(); i++) {
-			
-			int amount = list.get(i).getCartNo();
-			
-			
-		}
-		
-
-		
-		//System.out.println("rsp , dDate" + rsp + "======="+ dRequest);
-		//String dDate = request.getParameter("data");
-		//String data = request.getParameter("data");
-		
-		//System.out.println("re , dDate : 111111111");
-		//request.setAttribute("dDate",dDate);
-		//SimpleDateFormat
-		
-		
-		
 		if(rsp.equals("true")) {
-		
-
-		
-		int result = new CartService().updateCart(writer);
-		int result2 = new OrdertService().insertOrder(o)	;
 
 		String msg = "결제가 성공적으로 완료되었습니다. <br> 도착 예정시간은 약 " + dDate + "일 입니다.";
-		//System.out.println( msg);
 		request.setAttribute("msg", msg);
 		request.getRequestDispatcher("views/cart/paymentResult.jsp").forward(request, response);
 			
-		}
+		}else {
 		
 		response.sendRedirect("cartList.do");
+		}
 	}
 
 	/**

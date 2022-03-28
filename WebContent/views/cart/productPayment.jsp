@@ -993,56 +993,5 @@
 		
 </script>
 
-    <script type="text/javascript">
-    
-    
-    function change(value, name){
-    	
-		let String = name; // 값이 바뀐 select 이름
-
-    	let count = value; // 바뀐 갯수
-    	let index = String.charAt(String.length-1); // 몇변째상품의 select인지 인덱스 찾기
-    	
-    	let original = $('#original'+index+'').html(); // 값이 바뀐 상품의 1개당 가격 칸
-    	let totprice2 = $('[name="twochangePrice'+index+'"]').html(); // 노란색칸 상품금액(origianl * count) 칸
-    	let pid = $('[name="title'+index+'"]').val(); // 갯수바뀐상품의 상품번호 칸
-    	let changetotal = $('[name="changetotal'+index+'"]').html(); // 노란색칸 주문금액(origianl * count + 2500)	칸
-    	
-    	let result = original * count
-    	console.log(result)
-    	// 바뀐갯수와 * 1개당 가격 => DB에 들어갈 총금액
-    	
-    	
-    	$.ajax({
-			
-			url: "amountChange.do",
-			
-			type: "get",
-			
-			data:{
-					q:count,
-					name:pid,
-					p:result
-	
-				},
-			
-			success:function(){
-				
-				console.log("성공")
-				$('[name="ChangePrice'+index+'"]').html(result);
-				$('[name="twochangePrice'+index+'"]').html(result);
-				$('[name="changetotal'+index+'"]').html(result+2500);
-				
-			},
-			
-			error:function(){
-		   			console.log("ajax통신실패");
-		   			
-		   		}
-		
-			})
-	}
-    </script>
-
 </body>
 </html>

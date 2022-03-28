@@ -375,6 +375,196 @@
 	    vertical-align: top;
 	}
 
+	.customer__h2 {
+    padding-left: 2px;
+    margin-bottom: 8px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+	}
+
+	.customer__table {
+    width: 100%;
+    border-top: 2px solid #cecece;
+	}
+
+	.customer__col--2 {
+	    border-bottom: 1px solid #e4e4e4;
+	    padding: 10px 16px;
+	}
+	
+	.customer__col--1 {
+    width: 120px;
+    border: solid #e4e4e4;
+    border-width: 0 1px 1px 0;
+    padding: 7px 10px 7px 15px;
+    font-weight: 700;
+    text-align: right;
+    background: #f4f4f4;
+	}
+
+	.customer__col--2 {
+    border-bottom: 1px solid #e4e4e4;
+    padding: 10px 16px;
+	}
+
+	.page-pc.page-order input[type=password], .page-pc.page-order input[type=tel], .page-pc.page-order input[type=text] {
+	    height: 22px;
+	    padding: 0 0 0 5px;
+	    border: 1px solid #ddd;
+	    font-size: 12px;
+	    color: #333;
+	}
+
+	.customer__root {
+    margin-top: 40px;
+	}
+	
+	#product-list-amount{
+	
+		font-size: 15px;
+
+		color: cadetblue;
+	}
+
+	.delivery-address__caption-header {
+    padding-left: 2px;
+    margin: 30px 0 8px;
+    text-align: left;
+    font-size: 20px;
+    font-weight: 700;
+	}
+	
+	.delivery-address {
+    border-top: 2px solid #cecece;
+    width: 100%;
+	}
+	
+	.delivery-address__th {
+    border-right: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+    padding: 10px 10px 7px 15px;
+    width: 120px;
+    background-color: #f4f4f4;
+    text-align: right;
+	}
+	
+	.delivery-address__td--name {
+    padding-top: 12.5px;
+    padding-bottom: 12.5px;
+	}
+	
+	.delivery-address__td {
+    border-bottom: 1px solid #e4e4e4;
+    padding: 10px 0 10px 16px;
+	}
+	
+	body, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, li, ol, pre, ul {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    color: #333;
+    font-family: "돋움",Dotum,sans-serif;
+	}
+	
+	.delivery-request-message__container {
+    border-top: 1px solid #e4e4e4;
+    border-left: 1px solid #f4f4f4;
+    border-bottom: 1px solid #e4e4e4;
+	}
+	
+	.delivery-request-message {
+    width: 100%;
+	}
+	
+	tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+	}
+
+	.delivery-request-message__th {
+    padding: 7px 10px 7px 15px;
+    border-right: 1px solid #e4e4e4;
+    width: 103px;
+    background-color: #f4f4f4;
+    text-align: right;
+	}
+	
+	.delivery-request-message__td--name {
+    padding-top: 10px;
+    padding-bottom: 10px;
+	}
+	
+	.delivery-request-message__td {
+    padding: 10px 0 10px 16px;
+    border-left: 1px solid #e4e4e4;
+	}
+	
+	div[data-ajax-view=box] {
+    position: relative;
+	}
+
+	.bundle-info__retail {
+    margin-top: 8px;
+	}
+	
+	.page-pc .bundle-info__pdd-group-title {
+    margin-top: 20px;
+	}
+	
+	.bundle-info__pdd-group-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 9px;
+    margin-top: 20px;
+    line-height: 21px;
+	}
+	
+	.order-buttons, .summary-area {
+    margin-top: 30px;
+    text-align: center;
+    position: relative;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </style>
 </head>
 <body>
@@ -385,6 +575,107 @@
         <section class="cart-title">
         주문/결제
         </section>
+        
+<%--구매자 정보 --%> <div data-component="customer"><div class="customer__root">
+		    <h2 class="customer__h2">
+		        구매자정보
+		    </h2>
+		    <table class="customer__table">
+		        <tbody>
+			        <tr>
+			            <td class="customer__col customer__col--1">
+			                이름
+			            </td>
+			            <td class="customer__col customer__col--2">
+			                ${m.userName}
+			            </td>
+			        </tr>
+		        	<tr data-component="customer-realname-auth"></tr>
+		        	<tr>
+		            <td class="customer__col customer__col--1">
+		                휴대폰 번호
+		            </td>
+		            <td class="customer__col customer__col--2">
+		                <div data-component="customer-phone"><div class="customer-phone__root">
+		    <div data-component="customer-phone-form-tel">
+			    <form data-customer-phone--form-tel="">
+				    <div>
+				        <input type="tel" class="customer-phone__input-tel " value="${m.phone}">
+				        <button type="submit" >
+				            수정
+				        </button>
+				    </div>
+				</form>
+			</div>
+		    <div data-component="customer-phone-form-auth"></div>
+			</div>
+			</div>
+		            </td>
+		        </tr>
+		    </tbody>
+		</table>
+		</div></div>        
+		
+<%--받는사람 정보 --%><div data-component="deliveryAddress">    
+	<h2 class="delivery-address__caption-header">
+	받는사람정보
+	    <button class="delivery-address__popup-list-button" type="button" data-delivery-address__popup-list-button="">
+	        배송지변경
+	    </button>
+    </h2>
+    <table class="delivery-address">
+        <tbody>
+	        <tr>
+	            <th class="delivery-address__th">이름</th>
+	            <td class="delivery-address__td delivery-address__td--name delivery-address__td-rocket-fresh-mvp2">
+	                <span class="delivery-address__name">${m.userName}</span>
+	            </td>
+	        </tr>
+        <tr>
+            <th class="delivery-address__th">배송주소</th>
+            <td class="delivery-address__td">
+                ${m.address}
+                <div id="blocked-address-error-message" class="blocked-address-section" data-delivery-address__blocked-message="">
+
+
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th class="delivery-address__th delivery-address__th--no-line">연락처</th>
+            <td class="delivery-address__td delivery-address__td--no-line">
+                ${m.phone }
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>        
+        
+<%--배송요청사항 --%> <div data-delivery-address__related-table="">
+       					 <div data-component="deliveryRequestMessage"><div class="delivery-request-message__container" data-delivery-request-message__container="">
+							<table class="delivery-request-message">
+							    <tbody>
+								    <tr>
+								        <th class="delivery-request-message__th" style="width:120px">
+								            <span>배송 요청사항</span>
+								        </th>
+									        <td class="delivery-request-message__td delivery-request-message__td--name">
+									            <span class="delivery-request-message__type-label delivery-request-message__type-label--select" data-delivery-request-message__type-label="">
+								               	
+								    				<input id="dRequest" name="dRequest" type="text">
+								    
+								           		</span>
+								        	</td>
+								    </tr>
+							    </tbody>
+							</table>
+						</div>
+						</div>
+        
+    				</div>        
+			
+				<div class="bundle-info__pdd-group-title">배송 상품 정보</div>
+        
          	 <form id="listInfo" action="<%=request.getContextPath()%>/pay">
    									<table class="cartTable">
    						   		   
@@ -431,37 +722,12 @@
    						                           </div>
    						                           
    						                                <div class="option-price-part" >
-   						                               
-   						                               		<span class="unit-cost" id="original"><%=c.getPoPrice() %></span>
-   						                                   
-   																<select class="quantity-select" id="amountChange" name="amountChange" onchange="change(this.value, this.name)" >
-   																		
-   																		<option><%=pQ %></option>
-   																		
-   																		<option value="1">1</option>
-   																	
-   																		<option value="2">2</option>
-   																		<option value="3">3</option>
-   															
-   																		<option value="4">4</option>
-   																	
-   																		<option value="5">5</option>
-   																	
-   																		<option value="6">6</option>
-   																	
-   																		<option value="7">7</option>
-   																	
-   																		<option value="8">8</option>
-   																	
-   																		<option value="9">9</option>
-   																	
-   																		<option value="10">10+</option>
-   																		
-   																</select>
-   																   						                                   
+										
+   															<div id="product-list-amount"><b><%=pQ %> 개</b></div>
+ 	   						                                   
    						                                </div>
    						                         
-   						                         </div>
+   						                         	</div>
    						                          
    						                   </td>
    						                   
@@ -473,7 +739,7 @@
    						                  
    							               <td class="delivery-fee" rowspan="1" headers="th-delivery-fee">
    						                           
-   						                       <span class="delivery-fee__free"  name="dPrice">2500원</span>
+   						                       <span class="delivery-fee__free"  name="dPrice">2500</span>
    						                           
    						                   </td>
    						                      
@@ -517,21 +783,12 @@
    						     </form> <%-- 본문 끝--%>
         
 	
-    	<div>
-    		<p> ${totPrice}</p>
-    		<input id="dRequest" name="dRequest" type="text">
-    	</div>
-	 <table>
-		<tr>
-			<td>
-				    <p>아임 서포트 결제 모듈 테스트 해보기</p>
-				    <button id="check_module" type="button">아임 서포트 결제 모듈 테스트 해보기</button>
-			</td>
-		</tr>
-		<tr>
-			<td><a id="continueShoopingBtn" class="goShopping logging" href=<%=request.getContextPath()%>>계속 쇼핑하기</a></td>
-		</tr>
-	</table>
+     <div class="order-buttons">
+	 
+		<a id="continueShoopingBtn" class="goShopping logging" href="<%=request.getContextPath()%>/cartList.do">이전 단계로</a>
+		<a id="check_module" type="button" class="goPayment">결제하기</a>
+
+	</div>
 	<iframe id="ab_iframe" class="ab_test"width="0" height="0"></iframe> 
 	</section>
 	<jsp:include page = "../common/footer.jsp"/>
@@ -583,7 +840,7 @@
 					name: '주문명:  <%=c.getPName()%>',
 					//결제창에서 보여질 이름
 					
-					amount: <%=pPrice%> <%--$('[name="total"]').val()--%>
+					amount: '<%=pPrice%>' <%--$('[name="total"]').val()--%>
 					//가격
 					
 					//buyer_email: 'iamport@siot.do',

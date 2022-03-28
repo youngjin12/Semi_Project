@@ -65,9 +65,10 @@ private Properties prop = new Properties();
 		//System.out.println("Dao result : " + result);
 		return result;
 	}
-	public ArrayList<Order> selectCartList(Connection conn, int uNo) {
-		ArrayList<Order> list = new ArrayList<>();
-		
+	public ArrayList<Order> selectOrderList(Connection conn, int uNo) {
+		ArrayList<Order> list = new ArrayList<Order>();
+		//Order o = new Order();
+		Order o = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
@@ -80,15 +81,25 @@ private Properties prop = new Properties();
 			
 			while(rset.next()) {
 				
-				Order o = new Order(rset.getInt("ORDER_NO"),
-								  rset.getInt("USER_NO"),
-								  rset.getDate("ORDER_DATE"),
-								  rset.getString("DELIVERY_REQUEST"),
-								  rset.getInt("PRODUCT_ID"),
-								  rset.getInt("PRODUCT_PRICE"),
-								  rset.getInt("PRODUCT_AMOUNT"));
-							
+				o = new Order();
+				
+				o.setOrderNo(rset.getInt("ORDER_NO"));
+				o.setOrderDate(rset.getDate("ORDER_DATE"));
+				o.setDeliveryRequest(rset.getString("DELIVERY_REQUEST"));
+				o.setPAmount(rset.getInt("PRODUCT_AMOUNT"));
+				o.setPPrice(rset.getInt("PRODUCT_PRICE"));
+				o.setPiName(rset.getString("PI_NAME"));
+				o.setPName(rset.getString("P_NAME"));
+				o.setDState(rset.getString("D_STATE"));
+				
+
+				System.out.println("Dao ============= " + o.getPiName() +"===== "+ o.getPName());
+				if(o.getDeliveryRequest() == null) {
+					
+					o.setDeliveryRequest("없음");
+				}
 				list.add(o);
+				System.out.println("Dao list =========" + list);
 				//System.out.println("Dao list =====" + list);
 			}
 			

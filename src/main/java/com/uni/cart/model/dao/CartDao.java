@@ -300,7 +300,40 @@ private Properties prop = new Properties();
 			close(rset);
 			close(pstmt);
 		}
+		System.out.println("Dao ============= c : " + c);
+		return c;
+	}
+
+	public Cart selectDetailProduct(Connection conn, int pId) {
+		Cart c = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectDetailProduct");
 	
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pId);
+			
+			rset = pstmt.executeQuery();
+		
+		
+		if(rset.next()) {
+			 c = new Cart();
+					 
+			c.setPId(rset.getInt("P_ID"));
+			c.setPName(rset.getString("P_NAME"));
+			c.setPiName(rset.getString("PI_NAME"));
+			c.setDDate(rset.getDate("D_DATE"));
+                 
+		}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		System.out.println("Dao ============= c : " + c);
 		return c;
 	}
 

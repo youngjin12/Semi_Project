@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.uni.cart.model.service.CartService;
 import com.uni.cart.model.vo.Cart;
+import com.uni.member.model.vo.Member;
 
 /**
  * Servlet implementation class ProductDetailPaymentServlet
@@ -29,21 +30,23 @@ public class ProductDetailPaymentServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String writer = String.valueOf(((Member)request.getSession().getAttribute("loginUser")).getUserNo());
+		Member m = new CartService().MemberInfo(writer);
+		
 		int pId = Integer.parseInt(request.getParameter("pId"));
 		int pQ = Integer.parseInt(request.getParameter("numBox"));
 		int poPrice =  Integer.parseInt(request.getParameter("pPrice"));
 		
-		
-		
-		//System.out.println("pId + btnradio ==========" + pId + " =====" + pQ);
-		
-		Cart c = new CartService().selectProduct(pId);
-		
+		Cart c = new CartService().selectDetailProduct(pId);
+		System.out.println("servlet c ==============" + c);
+		System.out.println("servlet m **********************" + m);
 		int pPrice = poPrice * pQ;
+		
 		//System.out.println("pPrice + poPrice ======" + pPrice + "====="+ poPrice);
 		request.setAttribute("c", c);
 		request.setAttribute("pPrice", pPrice);
 		request.setAttribute("pQ", pQ);
+		request.setAttribute("m", m);
 		
 		request.getRequestDispatcher("views/order/selectProductPayment.jsp").forward(request, response);
 		

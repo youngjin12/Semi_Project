@@ -107,4 +107,14 @@ public class CartService {
 		return c;
 	}
 
+	public Cart selectDetailProduct(int pId) {
+		Connection conn = getConnection();
+		
+		Cart c = new CartDao().selectDetailProduct(conn, pId);
+		//System.out.println("Service list ============" + list);
+		close(conn);
+		
+		return c;
+	}
+
 }

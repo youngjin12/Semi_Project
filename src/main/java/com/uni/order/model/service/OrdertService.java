@@ -24,10 +24,11 @@ public class OrdertService {
 	public ArrayList<Order> selectOrderList(int uNo) {
 		Connection conn = getConnection();
 		
-		ArrayList<Order> list  = new OrderDao().selectCartList(conn, uNo);
+		ArrayList<Order> list  = new OrderDao().selectOrderList(conn, uNo);
 		
 		close(conn);
 		
+		System.out.println("service list =====" + list);
 		return list;
 	}
 
