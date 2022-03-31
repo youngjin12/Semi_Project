@@ -28,8 +28,18 @@ public class OrdertService {
 		
 		close(conn);
 		
-		System.out.println("service list =====" + list);
+		//System.out.println("service list =====" + list);
 		return list;
+	}
+
+	public int updatePhone(String phone, String userNo) {
+		Connection conn = getConnection();
+		
+		int result = new OrderDao().updatePhone(conn, phone, userNo);
+		
+		close(conn);
+		
+		return result;
 	}
 
 }

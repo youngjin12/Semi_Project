@@ -40,6 +40,8 @@ public class ReplyListServlet extends HttpServlet {
 		// 댓글 여러 개일 수 있기 때문에 ArrayList에 담기
 		ArrayList<Reply> list = new BoardService().selectRList(bno);
 		
+		request.setAttribute("list", list);
+		
 		// json 타입으로 응답할 것이다
 		response.setContentType("application/json; charset=utf-8");
 		// 댓글 createDate 날짜 형식 지정

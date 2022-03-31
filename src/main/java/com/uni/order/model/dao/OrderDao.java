@@ -24,8 +24,6 @@ private Properties prop = new Properties();
 		
 		String fileName = CartDao.class.getResource("/sql/order/order-query.properties").getPath();
 		
-		//System.out.println("fileName   " + fileName);
-		
 		try {
 			prop.load(new FileReader(fileName));
 		} catch (FileNotFoundException e) {
@@ -40,7 +38,6 @@ private Properties prop = new Properties();
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
-		//changeAmount=UPDATE CART SET PRODUCT_AMOUNT = ? WHERE PRODUCT_NAME = ? AND USER_NO = ?
 		String sql = prop.getProperty("productInOrderList");
 		
 		try {
@@ -62,7 +59,6 @@ private Properties prop = new Properties();
 		}  finally {
 			close(pstmt);
 		}
-		//System.out.println("Dao result : " + result);
 		return result;
 	}
 	public ArrayList<Order> selectOrderList(Connection conn, int uNo) {
@@ -76,7 +72,6 @@ private Properties prop = new Properties();
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, uNo);
-			//System.out.println("Dao writer : " + writer);
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -92,15 +87,11 @@ private Properties prop = new Properties();
 				o.setPName(rset.getString("P_NAME"));
 				o.setDState(rset.getString("D_STATE"));
 				
-
-				System.out.println("Dao ============= " + o.getPiName() +"===== "+ o.getPName());
 				if(o.getDeliveryRequest() == null) {
 					
 					o.setDeliveryRequest("없음");
 				}
 				list.add(o);
-				System.out.println("Dao list =========" + list);
-				//System.out.println("Dao list =====" + list);
 			}
 			
 		} catch (SQLException e) {
@@ -110,9 +101,32 @@ private Properties prop = new Properties();
 			close(rset);
 			close(pstmt);
 		}
-		
-		//System.out.println("Dao list : " + list);
 		return list;
+	}
+	public int updatePhone(Connection conn, String phone, String userNo) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+
+		String sql = prop.getProperty("updatePhone");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, phone);
+			pstmt.setInt(2, Integer.parseInt(userNo));
+
+		
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  finally {
+			close(pstmt);
+		}
+
+		return result;
 	}
 
 }

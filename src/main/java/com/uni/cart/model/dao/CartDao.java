@@ -58,7 +58,8 @@ private Properties prop = new Properties();
 								  rset.getInt("PRODUCT_PRICE"),
 								  rset.getInt("PRODUCT_AMOUNT"),
 								  rset.getString("P_NAME"),
-							  	  rset.getDate("D_DATE"));
+							  	  rset.getDate("D_DATE"),
+							  	  rset.getInt("P_NUM"));
 				
 				list.add(c);
 				//System.out.println("Dao list =====" + list);
@@ -333,8 +334,36 @@ private Properties prop = new Properties();
 			close(rset);
 			close(pstmt);
 		}
-		System.out.println("Dao ============= c : " + c);
+		//System.out.println("Dao ============= c : " + c);
 		return c;
+	}
+
+	public int insertSelectProduct(Connection conn, String writer, String pA, String pP, String pId) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		//changeAmount=UPDATE CART SET PRODUCT_AMOUNT = ? WHERE PRODUCT_NAME = ? AND USER_NO = ?
+		String sql = prop.getProperty("insertSelectCart");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(writer));
+			pstmt.setInt(2, Integer.parseInt(pA));
+			pstmt.setInt(3, Integer.parseInt(pP));
+			pstmt.setInt(4, Integer.parseInt(pId));
+			
+		
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  finally {
+			close(pstmt);
+		}
+		//System.out.println("Dao result : " + result);
+		return result;
 	}
 
 }

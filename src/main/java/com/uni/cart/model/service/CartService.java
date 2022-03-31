@@ -117,4 +117,14 @@ public class CartService {
 		return c;
 	}
 
+	public int insertSelectProduct(String writer, String pA, String pP, String pId) {
+		Connection conn = getConnection();
+		
+		int result = new CartDao().insertSelectProduct(conn, writer, pA, pP, pId);
+		
+		close(conn);
+		
+		return result;
+	}
+
 }

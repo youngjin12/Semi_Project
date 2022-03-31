@@ -10,7 +10,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+
 import com.uni.member.model.vo.Member;
+
 import com.uni.product_IO.model.vo.Product_IO;
 
 import static com.uni.common.JDBCTemplate.*;
@@ -256,7 +258,116 @@ public class MemberDao {
 		return result;
 		
 	}
+	public Member kakaoMember(Connection conn, String id) {
+		 Member loginUser = null;
+			
+			PreparedStatement pstmt = null;
+			
+			ResultSet rset = null;
+			
+		     
+			String sql = prop.getProperty("kakaologin");
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				
+			
+			rset = pstmt.executeQuery();
+		
+			
+			if(rset.next()) {
+				loginUser = new Member(
+						rset.getString("KAKAOID")					
+						);
+			}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+			System.out.println(loginUser);
+			return loginUser;
 	}
+	public Member findid(Connection conn, String username, String usertel) {
+		 Member loginUser = null;
+			
+			PreparedStatement pstmt = null;
+			
+			ResultSet rset = null;
+			
+		     
+			String sql = prop.getProperty("findid");
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, username);
+				pstmt.setString(2, usertel);
+			
+			rset = pstmt.executeQuery();
+		
+			
+			if(rset.next()) {
+				loginUser = new Member(
+						rset.getInt("USER_NO"),
+						rset.getString("USER_ID"),
+						rset.getString("USER_PWD"),
+						rset.getString("USER_NAME"),
+						rset.getString("PHONE"),					
+						rset.getString("ADDRESS"),	
+						rset.getInt("MILEAGE"),		  
+						rset.getString("STATUS")
+						);
+			}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			return loginUser;
+		}
+	public Member findpwd(Connection conn, String id, String usertel) {
+		 Member loginUser = null;
+			
+			PreparedStatement pstmt = null;
+			
+			ResultSet rset = null;
+			
+		     
+			String sql = prop.getProperty("findpwd");
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				pstmt.setString(2, usertel);
+			
+			rset = pstmt.executeQuery();
+		
+			
+			if(rset.next()) {
+				loginUser = new Member(
+						rset.getInt("USER_NO"),
+						rset.getString("USER_ID"),
+						rset.getString("USER_PWD"),
+						rset.getString("USER_NAME"),
+						rset.getString("PHONE"),					
+						rset.getString("ADDRESS"),	
+						rset.getInt("MILEAGE"),		  
+						rset.getString("STATUS")
+						);
+			}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			return loginUser;
+	}
+}
+
+
 	
 	
 	
